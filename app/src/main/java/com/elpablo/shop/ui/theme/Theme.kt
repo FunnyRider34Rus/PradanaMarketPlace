@@ -28,7 +28,8 @@ private val LightColorScheme = lightColorScheme(
     secondary = SecondaryTextColor,
     tertiary = TextHintColor,
     background = BackgroundColor,
-    surface = MainTextColor
+    surface = MainTextColor,
+    onBackground = TextInputBackgroundColor
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
