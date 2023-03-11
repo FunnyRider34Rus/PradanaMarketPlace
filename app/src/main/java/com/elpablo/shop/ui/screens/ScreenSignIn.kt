@@ -1,7 +1,9 @@
 package com.elpablo.shop.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,16 +11,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,15 +24,16 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.elpablo.shop.R
+import com.elpablo.shop.ui.theme.AppTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScreenSignIn(modifier: Modifier) {
 
@@ -52,102 +51,44 @@ fun ScreenSignIn(modifier: Modifier) {
 
         Text(
             text = stringResource(id = R.string.screen_sign_in_title_text),
-            color = MaterialTheme.colorScheme.surface,
-            style = MaterialTheme.typography.headlineLarge
+            color = AppTheme.color.primaryTextColor,
+            style = AppTheme.typography.authTitleText
         )
 
-        OutlinedTextField(
+        CustomTextField(
+            modifier = Modifier.padding(top = 60.dp),
+            placeholder = stringResource(id = R.string.screen_sign_in_input_first_name_hint),
             value = firstNameInput,
-            onValueChange = {
-                firstNameInput = it
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 35.dp),
-            placeholder = {
-                Text(
-                    text = stringResource(id = R.string.screen_sign_in_input_first_name_hint),
-                    modifier = Modifier.fillMaxWidth(),
-                    style = LocalTextStyle.current.copy(textAlign = TextAlign.Center)
-                )
-            },
-            textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
-            singleLine = true,
-            shape = RoundedCornerShape(32.0.dp),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                textColor = MaterialTheme.colorScheme.surface,
-                containerColor = MaterialTheme.colorScheme.onBackground,
-                placeholderColor = MaterialTheme.colorScheme.tertiary,
-                focusedBorderColor = MaterialTheme.colorScheme.onBackground,
-                unfocusedBorderColor = MaterialTheme.colorScheme.onBackground
-            )
+            onValueChange = { firstNameInput = it }
         )
 
-        OutlinedTextField(
+        CustomTextField(
+            modifier = Modifier.padding(top = 35.dp),
+            placeholder = stringResource(id = R.string.screen_sign_in_input_last_name_hint),
             value = lastNameInput,
-            onValueChange = {
-                lastNameInput = it
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(top = 35.dp),
-            placeholder = {
-                Text(
-                    text = stringResource(id = R.string.screen_sign_in_input_last_name_hint),
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center
-                )
-            },
-            textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
-            singleLine = true,
-            shape = RoundedCornerShape(32.0.dp),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                textColor = MaterialTheme.colorScheme.surface,
-                containerColor = MaterialTheme.colorScheme.onBackground,
-                placeholderColor = MaterialTheme.colorScheme.tertiary,
-                focusedBorderColor = MaterialTheme.colorScheme.onBackground,
-                unfocusedBorderColor = MaterialTheme.colorScheme.onBackground
-            )
+            onValueChange = { lastNameInput = it }
         )
 
-        OutlinedTextField(
+        CustomTextField(
+            modifier = Modifier.padding(top = 35.dp),
+            placeholder = stringResource(id = R.string.screen_sign_in_input_email_hint),
             value = emailInput,
-            onValueChange = {
-                emailInput = it
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 35.dp),
-            placeholder = {
-                Text(
-                    text = stringResource(id = R.string.screen_sign_in_input_email_hint),
-                    modifier = Modifier.fillMaxWidth(),
-                    style = LocalTextStyle.current.copy(textAlign = TextAlign.Center)
-                )
-            },
-            textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
-            singleLine = true,
-            shape = RoundedCornerShape(32.0.dp),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                textColor = MaterialTheme.colorScheme.surface,
-                containerColor = MaterialTheme.colorScheme.onBackground,
-                placeholderColor = MaterialTheme.colorScheme.tertiary,
-                focusedBorderColor = MaterialTheme.colorScheme.onBackground,
-                unfocusedBorderColor = MaterialTheme.colorScheme.onBackground
-            )
+            onValueChange = { emailInput = it }
         )
 
         Button(
             onClick = { /*TODO*/ },
             modifier = Modifier
                 .padding(top = 35.dp)
-                .height(56.dp)
-                .fillMaxWidth()
+                .height(46.dp)
+                .fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = AppTheme.color.buttonBackground,
+                contentColor = AppTheme.color.primaryTextColor)
         ) {
             Text(
                 text = stringResource(id = R.string.screen_sign_in_button_text),
-                style = MaterialTheme.typography.bodyLarge
+                style = AppTheme.typography.authButtonText
             )
         }
 
@@ -158,62 +99,104 @@ fun ScreenSignIn(modifier: Modifier) {
         ) {
             Text(
                 text = stringResource(id = R.string.screen_sign_in_description_text),
-                color = MaterialTheme.colorScheme.tertiary,
-                style = MaterialTheme.typography.labelMedium
+                color = AppTheme.color.secondaryTextColor,
+                style = AppTheme.typography.authLabelText
             )
             Text(
                 modifier = Modifier
                     .padding(start = 8.dp)
                     .clickable { /*TODO*/ },
                 text = stringResource(id = R.string.screen_sign_in_description_button),
-                color = MaterialTheme.colorScheme.secondary,
-                style = MaterialTheme.typography.labelMedium
+                color = AppTheme.color.linkTextColor,
+                style = AppTheme.typography.authLabelText
             )
         }
 
-        Row (
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 70.dp)
-                .clickable { /*TODO*/ },
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.google_logo),
-                contentDescription = stringResource(id = R.string.screen_sign_in_button_with_google_text),
-                modifier = Modifier.size(16.dp),
-                tint = MaterialTheme.colorScheme.surface
-                )
-            Text(
-                modifier = Modifier.padding(start = 12.dp),
-                color = MaterialTheme.colorScheme.surface,
-                text = stringResource(id = R.string.screen_sign_in_button_with_google_text),
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
+        TextButtonWithIcon(
+            modifier = Modifier.padding(top = 70.dp),
+            icon = painterResource(id = R.drawable.google_logo),
+            description = stringResource(id = R.string.screen_sign_in_button_with_google_text),
+            onClick = { /*TODO*/ }
+        )
 
-        Row (
+        TextButtonWithIcon(
+            modifier = Modifier.padding(top = 38.dp),
+            icon = painterResource(id = R.drawable.apple_logo),
+            description = stringResource(id = R.string.screen_sign_in_button_with_apple_text),
+            onClick = { /*TODO*/ }
+        )
+    }
+}
+
+@Composable
+fun CustomTextField(
+    modifier: Modifier,
+    placeholder: String,
+    value: String,
+    onValueChange: (String) -> Unit
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(29.dp)
+            .clip(RoundedCornerShape(15.dp))
+            .background(AppTheme.color.textInputBackground),
+        contentAlignment = Alignment.Center
+    ) {
+        BasicTextField(
+            value = value,
+            onValueChange = onValueChange,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 38.dp)
-                .clickable { /*TODO*/ },
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.apple_logo),
-                contentDescription = stringResource(id = R.string.screen_sign_in_button_with_google_text),
-                modifier = Modifier.size(16.dp),
-                tint = MaterialTheme.colorScheme.surface
-            )
-            Text(
-                modifier = Modifier.padding(start = 12.dp),
-                color = MaterialTheme.colorScheme.surface,
-                text = stringResource(id = R.string.screen_sign_in_button_with_apple_text),
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
+                .align(Alignment.Center),
+            textStyle = AppTheme.typography.authHintText.copy(textAlign = TextAlign.Center),
+            singleLine = true,
+            decorationBox = { innerTextField ->
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (value.isEmpty()) {
+                        Text(
+                            text = placeholder,
+                            modifier = Modifier.fillMaxWidth(),
+                            color = AppTheme.color.hintTextColor,
+                            textAlign = TextAlign.Center,
+                            style = AppTheme.typography.authHintText
+                        )
+                    }
+                }
+                innerTextField()
+            }
+        )
+    }
+}
+
+@Composable
+fun TextButtonWithIcon(
+    modifier: Modifier,
+    icon: Painter,
+    description: String,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = modifier
+            .clickable { onClick },
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            painter = icon,
+            contentDescription = description,
+            modifier = Modifier.size(23.dp),
+            tint = AppTheme.color.primaryTextColor
+        )
+        Text(
+            text = description,
+            modifier = Modifier.padding(start = 12.dp),
+            color = AppTheme.color.primaryTextColor,
+            style = AppTheme.typography.authTextButtonText
+        )
     }
 }
 

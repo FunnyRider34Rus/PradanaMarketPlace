@@ -1,79 +1,57 @@
 package com.elpablo.shop.ui.theme
 
-import androidx.compose.material3.Typography
-import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.sp
 import com.elpablo.shop.R
+import com.elpablo.shop.ui.theme.Montserrat
 
 private val Montserrat = FontFamily(
-    Font(R.font.montserrat_regular),
-    Font(R.font.montserrat_medium, FontWeight.W500)
+    Font(resId = R.font.montserrat_bold, weight = FontWeight.Bold),
+    Font(resId = R.font.montserrat_semibold, weight = FontWeight.SemiBold),
+    Font(resId = R.font.montserrat_medium, weight = FontWeight.Medium)
+)
+data class Typographys(
+    val authTitleText: TextStyle,
+    val authButtonText: TextStyle,
+    val authTextButtonText: TextStyle,
+    val authHintText: TextStyle,
+    val authLabelText: TextStyle
 )
 
-@Suppress("DEPRECATION")
-val defaultTextStyle = TextStyle(
-    fontFamily = Montserrat,
-    platformStyle = PlatformTextStyle(
-        includeFontPadding = false
+val typography = Typographys(
+    authTitleText = TextStyle(
+        fontSize = 26.sp,
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.SemiBold,
+        letterSpacing = (-0.3).sp
     ),
-    lineHeightStyle = LineHeightStyle(
-        alignment = LineHeightStyle.Alignment.Center,
-        trim = LineHeightStyle.Trim.None
+    authButtonText = TextStyle(
+        fontSize = 14.sp,
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.Bold,
+        letterSpacing = (-0.3).sp
+    ),
+    authTextButtonText = TextStyle(
+        fontSize = 12.sp,
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.Medium,
+        letterSpacing = (-0.3).sp
+    ),
+    authHintText = TextStyle(
+        fontSize = 11.sp,
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.Medium,
+        letterSpacing = (-0.3).sp
+    ),
+    authLabelText = TextStyle(
+        fontSize = 10.sp,
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.Medium,
+        letterSpacing = (-0.3).sp
     )
 )
 
-val Typography = Typography(
-    displayLarge = defaultTextStyle.copy(
-        fontSize = 57.sp, lineHeight = 64.sp, letterSpacing = (-0.25).sp
-    ),
-    displayMedium = defaultTextStyle.copy(
-        fontSize = 45.sp, lineHeight = 52.sp, letterSpacing = 0.sp
-    ),
-    displaySmall = defaultTextStyle.copy(
-        fontSize = 36.sp, lineHeight = 44.sp, letterSpacing = 0.sp
-    ),
-    headlineLarge = defaultTextStyle.copy(
-        fontSize = 32.sp, lineHeight = 40.sp, letterSpacing = 0.sp
-    ),
-    headlineMedium = defaultTextStyle.copy(
-        fontSize = 28.sp, lineHeight = 36.sp, letterSpacing = 0.sp
-    ),
-    headlineSmall = defaultTextStyle.copy(
-        fontSize = 24.sp, lineHeight = 32.sp, letterSpacing = 0.sp
-    ),
-    titleLarge = defaultTextStyle.copy(
-        fontSize = 22.sp, lineHeight = 28.sp, letterSpacing = 0.sp
-    ),
-    titleMedium = defaultTextStyle.copy(
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.15.sp,
-        fontWeight = FontWeight.Medium
-    ),
-    titleSmall = defaultTextStyle.copy(
-        fontSize = 14.sp, lineHeight = 20.sp, letterSpacing = 0.1.sp, fontWeight = FontWeight.Medium
-    ),
-    labelLarge = defaultTextStyle.copy(
-        fontSize = 14.sp, lineHeight = 20.sp, letterSpacing = 0.1.sp, fontWeight = FontWeight.Medium
-    ),
-    labelMedium = defaultTextStyle.copy(
-        fontSize = 12.sp, lineHeight = 16.sp, letterSpacing = 0.5.sp, fontWeight = FontWeight.Medium
-    ),
-    labelSmall = defaultTextStyle.copy(
-        fontSize = 11.sp, lineHeight = 16.sp, letterSpacing = 0.5.sp, fontWeight = FontWeight.Medium
-    ),
-    bodyLarge = defaultTextStyle.copy(
-        fontSize = 16.sp, lineHeight = 24.sp, letterSpacing = 0.5.sp
-    ),
-    bodyMedium = defaultTextStyle.copy(
-        fontSize = 14.sp, lineHeight = 20.sp, letterSpacing = 0.25.sp
-    ),
-    bodySmall = defaultTextStyle.copy(
-        fontSize = 12.sp, lineHeight = 16.sp, letterSpacing = 0.4.sp
-    ),
-)
+
