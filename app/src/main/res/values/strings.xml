@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Shop</string>
+
+    <!-- Resourses for SignIn Screen -->
     <string name="screen_sign_in_title_text">Sign in</string>
     <string name="screen_sign_in_input_first_name_hint">First name</string>
     <string name="screen_sign_in_input_last_name_hint">Last name</string>
@@ -9,4 +11,10 @@
     <string name="screen_sign_in_description_button">Log in</string>
     <string name="screen_sign_in_button_with_google_text">Sign in with Google</string>
     <string name="screen_sign_in_button_with_apple_text">Sign in with Apple</string>
+
+    <!-- Resourses for Login Screen -->
+    <string name="screen_login_title_text">Welcome back</string>
+    <string name="screen_login_input_first_name_hint">First name</string>
+    <string name="screen_login_input_password_hint">Password</string>
+    <string name="screen_login_button_text">Login</string>
 </resources>

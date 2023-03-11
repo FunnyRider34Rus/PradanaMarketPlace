@@ -1,4 +1,4 @@
-package com.elpablo.shop.ui.screens
+package com.elpablo.shop.ui.screens.signin
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -31,11 +30,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.elpablo.shop.R
+import com.elpablo.shop.ui.navigation.Screen
 import com.elpablo.shop.ui.theme.AppTheme
 
 @Composable
-fun ScreenSignIn(modifier: Modifier) {
+fun ScreenSignIn(navController: NavController, modifier: Modifier) {
 
     var firstNameInput by rememberSaveable { mutableStateOf("") }
     var lastNameInput by rememberSaveable { mutableStateOf("") }
@@ -82,9 +84,10 @@ fun ScreenSignIn(modifier: Modifier) {
                 .padding(top = 35.dp)
                 .height(46.dp)
                 .fillMaxWidth(),
+            shape = AppTheme.shape.authButtonShape,
             colors = ButtonDefaults.buttonColors(
                 containerColor = AppTheme.color.buttonBackground,
-                contentColor = AppTheme.color.primaryTextColor)
+                contentColor = AppTheme.color.textButtonColor)
         ) {
             Text(
                 text = stringResource(id = R.string.screen_sign_in_button_text),
@@ -105,7 +108,7 @@ fun ScreenSignIn(modifier: Modifier) {
             Text(
                 modifier = Modifier
                     .padding(start = 8.dp)
-                    .clickable { /*TODO*/ },
+                    .clickable { navController.navigate(Screen.Login.route) },
                 text = stringResource(id = R.string.screen_sign_in_description_button),
                 color = AppTheme.color.linkTextColor,
                 style = AppTheme.typography.authLabelText
@@ -139,7 +142,7 @@ fun CustomTextField(
         modifier = modifier
             .fillMaxWidth()
             .height(29.dp)
-            .clip(RoundedCornerShape(15.dp))
+            .clip(AppTheme.shape.authTextInputShape)
             .background(AppTheme.color.textInputBackground),
         contentAlignment = Alignment.Center
     ) {
@@ -203,5 +206,8 @@ fun TextButtonWithIcon(
 @Preview
 @Composable
 fun SignInPreview() {
-    ScreenSignIn(Modifier)
+    ScreenSignIn(
+        navController = rememberNavController(),
+        modifier = Modifier
+    )
 }

@@ -8,7 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.elpablo.shop.ui.screens.ScreenSignIn
+import com.elpablo.shop.ui.screens.login.ScreenLogin
+import com.elpablo.shop.ui.screens.signin.ScreenSignIn
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -17,14 +18,18 @@ fun ShopNavHost(
     startDestination: String
 ) {
     Scaffold { paddingValue ->
+        val modifier = Modifier.padding(paddingValue)
         NavHost(
-            modifier = Modifier.padding(paddingValue),
             navController = navController,
             startDestination = startDestination,
             route = Graph.NAVGRAPH.route
         ) {
             composable(route = Screen.SignIn.route) {
-                ScreenSignIn(modifier = Modifier)
+                ScreenSignIn(navController = navController, modifier = modifier)
+            }
+
+            composable(route = Screen.Login.route) {
+                ScreenLogin(navController = navController, modifier = modifier)
             }
         }
     }
@@ -33,7 +38,7 @@ fun ShopNavHost(
 
 sealed class Screen(val route: String) {
     object SignIn : Screen(route = "sign_in")
-    object WelcomeBack : Screen(route = "welcome_back")
+    object Login : Screen(route = "login")
     object Profile : Screen(route = "profile")
     object Dashboard : Screen(route = "dashboard")
     object Detail : Screen(route = "detail")

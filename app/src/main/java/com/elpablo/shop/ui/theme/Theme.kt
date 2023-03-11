@@ -12,6 +12,7 @@ fun ShopTheme(
     CompositionLocalProvider(
         LocalColorProvider provides lightPalette,
         LocalTypographyProvider provides typography,
+        LocalShapeProvider provides shapes,
         content = content
     )
 }
@@ -26,6 +27,11 @@ object AppTheme {
     @Composable
     @ReadOnlyComposable
     get() = LocalTypographyProvider.current
+
+    val shape: Shapes
+    @Composable
+    @ReadOnlyComposable
+    get() = LocalShapeProvider.current
 }
 
 val LocalColorProvider = staticCompositionLocalOf<Colors> {
@@ -33,4 +39,8 @@ val LocalColorProvider = staticCompositionLocalOf<Colors> {
 }
 val LocalTypographyProvider = staticCompositionLocalOf<Typographys> {
     error("No default typography provided")
+}
+
+val LocalShapeProvider = staticCompositionLocalOf<Shapes> {
+    error("No default shapes provided")
 }
