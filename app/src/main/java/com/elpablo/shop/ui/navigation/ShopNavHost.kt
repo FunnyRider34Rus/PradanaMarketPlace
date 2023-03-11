@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.elpablo.shop.ui.screens.login.ScreenLogin
+import com.elpablo.shop.ui.screens.profile.ScreenProfile
 import com.elpablo.shop.ui.screens.signin.ScreenSignIn
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,6 +31,10 @@ fun ShopNavHost(
 
             composable(route = Screen.Login.route) {
                 ScreenLogin(navController = navController, modifier = modifier)
+            }
+
+            composable(route = Screen.Profile.route) {
+                ScreenProfile(navController = navController, modifier = modifier)
             }
         }
     }

@@ -18,7 +18,10 @@ data class Typographys(
     val authButtonText: TextStyle,
     val authTextButtonText: TextStyle,
     val authHintText: TextStyle,
-    val authLabelText: TextStyle
+    val authLabelText: TextStyle,
+    val profileTitleText: TextStyle,
+    val profileHintText: TextStyle,
+    val profileMenuItemText: TextStyle
 )
 
 val typography = Typographys(
@@ -48,6 +51,24 @@ val typography = Typographys(
     ),
     authLabelText = TextStyle(
         fontSize = 10.sp,
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.Medium,
+        letterSpacing = (-0.3).sp
+    ),
+    profileTitleText = TextStyle(
+        fontSize = 15.sp,
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.Bold,
+        letterSpacing = (-0.3).sp
+    ),
+    profileHintText = TextStyle(
+        fontSize = 8.sp,
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.Medium,
+        letterSpacing = (-0.3).sp
+    ),
+    profileMenuItemText = TextStyle(
+        fontSize = 14.sp,
         fontFamily = Montserrat,
         fontWeight = FontWeight.Medium,
         letterSpacing = (-0.3).sp

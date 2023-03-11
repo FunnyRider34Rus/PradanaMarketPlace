@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.elpablo.shop.R
+import com.elpablo.shop.ui.navigation.Screen
 import com.elpablo.shop.ui.theme.AppTheme
 
 @Composable
@@ -63,7 +64,7 @@ fun ScreenLogin(navController: NavController, modifier: Modifier) {
         )
 
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { navController.navigate(Screen.Profile.route) },
             modifier = Modifier
                 .padding(top = 99.dp)
                 .height(46.dp)
