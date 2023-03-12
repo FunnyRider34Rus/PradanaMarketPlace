@@ -91,7 +91,6 @@ fun ScreenProfile(navController: NavController, modifier: Modifier) {
                 onClick = { /*TODO*/ },
                 modifier = Modifier
                     .fillMaxWidth()
-                    //.height(40.dp)
                     .padding(top = 36.dp),
                 shape = AppTheme.shape.authButtonShape,
                 colors = ButtonDefaults.buttonColors(
@@ -100,7 +99,9 @@ fun ScreenProfile(navController: NavController, modifier: Modifier) {
                 )
             ) {
                 Box(
-                    modifier = modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(40.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(

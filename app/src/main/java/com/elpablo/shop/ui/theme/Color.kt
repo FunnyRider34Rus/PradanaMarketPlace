@@ -12,7 +12,8 @@ data class Colors(
     val primaryTextColor: Color,
     val secondaryTextColor: Color,
     val linkTextColor: Color,
-    val hintTextColor: Color
+    val hintTextColor: Color,
+    val page1CategoryTextColor: Color
 )
 
 val lightPalette = Colors(
@@ -26,4 +27,5 @@ val lightPalette = Colors(
     secondaryTextColor = Color(0xFF808080),
     linkTextColor = Color(0xFF254FE6),
     hintTextColor = Color(0xFF7B7B7B),
+    page1CategoryTextColor = Color(0xFFA6A7AB)
 )

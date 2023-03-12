@@ -6,14 +6,18 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.elpablo.shop.R
-import com.elpablo.shop.ui.theme.Montserrat
 
 private val Montserrat = FontFamily(
     Font(resId = R.font.montserrat_bold, weight = FontWeight.Bold),
     Font(resId = R.font.montserrat_semibold, weight = FontWeight.SemiBold),
     Font(resId = R.font.montserrat_medium, weight = FontWeight.Medium)
 )
-data class Typographys(
+
+private val Poppins = FontFamily(
+    Font(resId = R.font.poppins_regular, weight = FontWeight.Normal),
+    Font(resId = R.font.montserrat_medium, weight = FontWeight.Medium)
+)
+data class Typography(
     val authTitleText: TextStyle,
     val authButtonText: TextStyle,
     val authTextButtonText: TextStyle,
@@ -21,10 +25,16 @@ data class Typographys(
     val authLabelText: TextStyle,
     val profileTitleText: TextStyle,
     val profileHintText: TextStyle,
-    val profileMenuItemText: TextStyle
+    val profileMenuItemText: TextStyle,
+    val page1TitleText: TextStyle,
+    val page1LocationText: TextStyle,
+    val page1SearchHintText: TextStyle,
+    val page1CategoryText: TextStyle,
+    val page1LatestTitleText: TextStyle,
+    val page1LatestOptionText: TextStyle
 )
 
-val typography = Typographys(
+val typography = Typography(
     authTitleText = TextStyle(
         fontSize = 26.sp,
         fontFamily = Montserrat,
@@ -70,6 +80,42 @@ val typography = Typographys(
     profileMenuItemText = TextStyle(
         fontSize = 14.sp,
         fontFamily = Montserrat,
+        fontWeight = FontWeight.Medium,
+        letterSpacing = (-0.3).sp
+    ),
+    page1TitleText = TextStyle(
+        fontSize = 20.sp,
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.Bold,
+        letterSpacing = (-0.3).sp
+    ),
+    page1LocationText = TextStyle(
+        fontSize = 10.sp,
+        fontFamily = Poppins,
+        fontWeight = FontWeight.Normal,
+        letterSpacing = (-0.3).sp
+    ),
+    page1SearchHintText = TextStyle(
+        fontSize = 9.sp,
+        fontFamily = Poppins,
+        fontWeight = FontWeight.Normal,
+        letterSpacing = (-0.3).sp
+    ),
+    page1CategoryText = TextStyle(
+        fontSize = 8.sp,
+        fontFamily = Poppins,
+        fontWeight = FontWeight.Medium,
+        letterSpacing = (-0.3).sp
+    ),
+    page1LatestTitleText = TextStyle(
+        fontSize = 15.sp,
+        fontFamily = Poppins,
+        fontWeight = FontWeight.Medium,
+        letterSpacing = (-0.3).sp
+    ),
+    page1LatestOptionText = TextStyle(
+        fontSize = 9.sp,
+        fontFamily = Poppins,
         fontWeight = FontWeight.Medium,
         letterSpacing = (-0.3).sp
     )

@@ -31,4 +31,14 @@
     <string name="screen_profile_menu_item_restore_purchase_text">Restore Purchase</string>
     <string name="screen_profile_menu_item_help_text">Help</string>
     <string name="screen_profile_menu_item_logout_text">Log out</string>
+
+    <!-- Resources for Page1 -->
+    <string name="screen_page1_appbar_title_black_text">Trade by</string>
+    <string name="screen_page1_appbar_title_blue_text">bata</string>
+    <string name="screen_page1_location_text">Location</string>
+    <string name="screen_page1_search_hint_text">What are you looking for ?</string>
+    <string name="screen_page1_latest_title_text">Latest</string>
+    <string name="screen_page1_latest_option_text">View all</string>
+    <string name="screen_page1_sale_title_text">Flash sale</string>
+    <string name="screen_page1_sale_option_text">View all</string>
 </resources>

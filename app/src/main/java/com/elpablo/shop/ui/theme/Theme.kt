@@ -23,7 +23,7 @@ object AppTheme {
     @ReadOnlyComposable
     get() = LocalColorProvider.current
 
-    val typography: Typographys
+    val typography: Typography
     @Composable
     @ReadOnlyComposable
     get() = LocalTypographyProvider.current
@@ -37,7 +37,7 @@ object AppTheme {
 val LocalColorProvider = staticCompositionLocalOf<Colors> {
     error("No default colors provided")
 }
-val LocalTypographyProvider = staticCompositionLocalOf<Typographys> {
+val LocalTypographyProvider = staticCompositionLocalOf<Typography> {
     error("No default typography provided")
 }
 
