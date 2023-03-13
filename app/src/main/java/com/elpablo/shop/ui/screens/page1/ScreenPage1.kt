@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,12 +42,10 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.elpablo.shop.R
-import com.elpablo.shop.data.categories
 import com.elpablo.shop.ui.theme.AppTheme
 
 @Composable
@@ -54,49 +53,14 @@ fun ScreenPage1(modifier: Modifier, viewModel: Page1ViewModel = hiltViewModel())
 
     val viewState by viewModel.viewState.collectAsState(Page1ViewState())
 
-    var searchInput by rememberSaveable { mutableStateOf("") }
-
     Column(modifier = modifier.fillMaxSize()) {
 
         //Appbar
-        Row(
+        Page1AppBar(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 9.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(
-                onClick = { /*TODO*/ },
-                modifier = Modifier.padding(start = 15.dp),
-                content = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_menu),
-                        contentDescription = null
-                    )
-                }
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                buildAnnotatedString {
-                    withStyle(style = SpanStyle(color = Color.Black)) {
-                        append(stringResource(id = R.string.screen_page1_appbar_title_black_text) + " ")
-                    }
-                    withStyle(style = SpanStyle(color = AppTheme.color.buttonBackground)) {
-                        append(stringResource(id = R.string.screen_page1_appbar_title_blue_text))
-                    }
-                },
-                style = AppTheme.typography.page1TitleText
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            AsyncImage(
-                model = R.drawable.profile,
-                contentDescription = stringResource(id = R.string.screen_profile_image_user_description),
-                modifier = Modifier
-                    .padding(end = 47.dp)
-                    .size(30.dp)
-                    .clip(CircleShape)
-            )
-        }
+                .padding(top = 9.dp)
+        )
 
         //Location Text
         Row(
@@ -118,81 +82,19 @@ fun ScreenPage1(modifier: Modifier, viewModel: Page1ViewModel = hiltViewModel())
         }
 
         //Search
-        Box(
-            modifier = modifier
-                .fillMaxWidth()
-                .height(29.dp)
-                .padding(horizontal = 56.dp)
-                .padding(top = 7.dp)
-                .clip(AppTheme.shape.authTextInputShape)
-                .background(AppTheme.color.textInputBackground),
-            contentAlignment = Alignment.Center
-        ) {
-            BasicTextField(
-                value = searchInput,
-                onValueChange = { searchInput = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.Center),
-                textStyle = AppTheme.typography.page1SearchHintText.copy(textAlign = TextAlign.Center),
-                singleLine = true,
-                decorationBox = {
-                    Box(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        if (searchInput.isEmpty()) {
-                            Text(
-                                text = stringResource(id = R.string.screen_page1_search_hint_text),
-                                modifier = Modifier.fillMaxWidth(),
-                                color = AppTheme.color.hintTextColor,
-                                textAlign = TextAlign.Center,
-                                style = AppTheme.typography.page1SearchHintText
-                            )
-                        }
-                    }
-                }
-            )
-        }
-
-        //Categories
-        LazyRow(
+        Page1SearchInput(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 15.dp),
-            state = rememberLazyListState()
-        ) {
-            if (viewState.category != null) {
-                items(count = viewState.category!!.size) { i ->
-                    Column(
-                        modifier = Modifier
-                            .padding(horizontal = 8.dp)
-                            .width(48.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(42.dp)
-                                .clip(CircleShape)
-                                .background(AppTheme.color.secondaryBackground),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                painter = painterResource(id = viewState.category!![i].icon),
-                                contentDescription = null
-                            )
-                        }
+                .padding(top = 7.dp)
+        )
 
-                        Text(
-                            text = viewState.category!![i].label,
-                            modifier = Modifier.padding(top = 11.dp),
-                            color = AppTheme.color.page1CategoryTextColor,
-                            style = AppTheme.typography.page1CategoryText
-                        )
-                    }
-                }
-            }
-        }
+        //Categories
+        Page1RowCategories(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 17.dp),
+            viewState = viewState
+        )
 
         //Latest block header
         Row(
@@ -215,7 +117,7 @@ fun ScreenPage1(modifier: Modifier, viewModel: Page1ViewModel = hiltViewModel())
             )
         }
 
-        LatestCard(
+        Page1LatestCard(
             modifier = Modifier.padding(horizontal = 11.dp),
             image = "https://www.dhresource.com/0x0/f2/albu/g8/M01/9D/19/rBVaV1079WeAEW-AAARn9m_Dmh0487.jpg",
             category = "Phones",
@@ -244,7 +146,7 @@ fun ScreenPage1(modifier: Modifier, viewModel: Page1ViewModel = hiltViewModel())
             )
         }
 
-        SaleCard(
+        Page1SaleCard(
             modifier = Modifier.padding(11.dp),
             image = "https://newbalance.ru/upload/iblock/697/iz997hht_nb_02_i.jpg",
             magazine = "",
@@ -257,7 +159,126 @@ fun ScreenPage1(modifier: Modifier, viewModel: Page1ViewModel = hiltViewModel())
 }
 
 @Composable
-fun LatestCard(
+fun Page1AppBar(modifier: Modifier) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        IconButton(
+            onClick = { /*TODO*/ },
+            modifier = Modifier.padding(start = 15.dp),
+            content = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_menu),
+                    contentDescription = null
+                )
+            }
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        Text(
+            buildAnnotatedString {
+                withStyle(style = SpanStyle(color = Color.Black)) {
+                    append(stringResource(id = R.string.screen_page1_appbar_title_black_text) + " ")
+                }
+                withStyle(style = SpanStyle(color = AppTheme.color.buttonBackground)) {
+                    append(stringResource(id = R.string.screen_page1_appbar_title_blue_text))
+                }
+            },
+            style = AppTheme.typography.page1TitleText
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        AsyncImage(
+            model = R.drawable.profile,
+            contentDescription = stringResource(id = R.string.screen_profile_image_user_description),
+            modifier = Modifier
+                .padding(end = 47.dp)
+                .size(30.dp)
+                .clip(CircleShape)
+        )
+    }
+}
+
+@Composable
+fun Page1SearchInput(modifier: Modifier) {
+    var searchInput by rememberSaveable { mutableStateOf("") }
+    Box(
+        modifier = modifier
+            .height(29.dp)
+            .padding(horizontal = 56.dp)
+            .clip(AppTheme.shape.authTextInputShape)
+            .background(AppTheme.color.textInputBackground),
+        contentAlignment = Alignment.Center
+    ) {
+        BasicTextField(
+            value = searchInput,
+            onValueChange = { searchInput = it },
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.Center),
+            textStyle = AppTheme.typography.page1SearchHintText.copy(textAlign = TextAlign.Center),
+            singleLine = true,
+            decorationBox = {
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (searchInput.isEmpty()) {
+                        Text(
+                            text = stringResource(id = R.string.screen_page1_search_hint_text),
+                            modifier = Modifier.fillMaxWidth(),
+                            color = AppTheme.color.hintTextColor,
+                            textAlign = TextAlign.Center,
+                            style = AppTheme.typography.page1SearchHintText
+                        )
+                    }
+                }
+            }
+        )
+    }
+}
+
+@Composable
+fun Page1RowCategories(modifier: Modifier, viewState: Page1ViewState) {
+    LazyRow(
+        modifier = modifier,
+        state = rememberLazyListState(),
+        horizontalArrangement = Arrangement.spacedBy(15.dp),
+        contentPadding = PaddingValues(horizontal = 15.dp)
+    ) {
+        if (viewState.category != null) {
+            items(count = viewState.category!!.size) { i ->
+                Column(
+                    modifier = Modifier
+                        .width(48.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(42.dp)
+                            .clip(CircleShape)
+                            .background(AppTheme.color.secondaryBackground),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(id = viewState.category!![i].icon),
+                            contentDescription = null
+                        )
+                    }
+
+                    Text(
+                        text = viewState.category!![i].label,
+                        modifier = Modifier.padding(top = 11.dp),
+                        color = AppTheme.color.page1CategoryTextColor,
+                        style = AppTheme.typography.page1CategoryText
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun Page1LatestCard(
     modifier: Modifier,
     image: String,
     category: String,
@@ -289,18 +310,21 @@ fun LatestCard(
             ) {
                 Text(
                     text = category,
-                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                    style = AppTheme.typography.page1LatestCategoryText
                 )
             }
             Text(
                 text = title,
-                modifier = Modifier.padding(top = 3.dp),
-                color = Color.White
+                modifier = Modifier.padding(top = 5.dp),
+                color = Color.White,
+                style = AppTheme.typography.page1LatestHeaderText
             )
             Text(
                 text = "$$price",
-                modifier = Modifier.padding(top = 1.dp, bottom = 7.dp),
-                color = Color.White
+                modifier = Modifier.padding(top = 2.dp, bottom = 9.dp),
+                color = Color.White,
+                style = AppTheme.typography.page1LatestPriceText
             )
         }
         Box(
@@ -325,7 +349,7 @@ fun LatestCard(
 }
 
 @Composable
-fun SaleCard(
+fun Page1SaleCard(
     modifier: Modifier,
     image: String,
     magazine: String,
@@ -369,12 +393,14 @@ fun SaleCard(
         ) {
             Text(
                 text = "$sale% off",
-                modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 2.dp),
+                style = AppTheme.typography.page1SaleLabelText
             )
         }
 
         Column(
             modifier = Modifier
+                .width(96.dp)
                 .align(Alignment.BottomStart)
                 .padding(start = 9.dp)
         ) {
@@ -386,18 +412,21 @@ fun SaleCard(
             ) {
                 Text(
                     text = category,
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                    style = AppTheme.typography.page1LatestHeaderText
                 )
             }
             Text(
                 text = title,
                 modifier = Modifier.padding(top = 6.dp),
-                color = Color.White
+                color = Color.White,
+                style = AppTheme.typography.page1SaleHeaderText
             )
             Text(
                 text = "$$price",
-                modifier = Modifier.padding(top = 12.dp, bottom = 17.dp),
-                color = Color.White
+                modifier = Modifier.padding(top = 6.dp, bottom = 12.dp),
+                color = Color.White,
+                style = AppTheme.typography.page1SaleLabelText
             )
         }
 
@@ -411,47 +440,37 @@ fun SaleCard(
         ) {
             Box(
                 modifier = Modifier
-                    .size(28.dp)
+                    .size(25.dp)
                     .clip(CircleShape)
                     .background(
                         Color(0xFFC4C4C4)
                     )
-                    .clickable {  },
+                    .clickable { },
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = Icons.Default.FavoriteBorder,
-                    contentDescription = null
+                    contentDescription = null,
+                    modifier = Modifier.size(14.dp)
                 )
             }
-            Spacer(modifier = Modifier.padding(6.dp))
+            Spacer(modifier = Modifier.padding(3.dp))
             Box(
                 modifier = Modifier
-                    .size(35.dp)
+                    .size(30.dp)
                     .clip(CircleShape)
                     .background(
                         Color(0xFFC4C4C4)
                     )
-                    .clickable {  },
+                    .clickable { },
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = null
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp)
                 )
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun LatestCardPreview() {
-    LatestCard(
-        modifier = Modifier,
-        image = "https://www.dhresource.com/0x0/f2/albu/g8/M01/9D/19/rBVaV1079WeAEW-AAARn9m_Dmh0487.jpg",
-        category = categories[0].label,
-        title = "Samsung S10",
-        price = "1000"
-    )
 }

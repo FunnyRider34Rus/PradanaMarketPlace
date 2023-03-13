@@ -15,7 +15,8 @@ private val Montserrat = FontFamily(
 
 private val Poppins = FontFamily(
     Font(resId = R.font.poppins_regular, weight = FontWeight.Normal),
-    Font(resId = R.font.montserrat_medium, weight = FontWeight.Medium)
+    Font(resId = R.font.montserrat_medium, weight = FontWeight.Medium),
+    Font(resId = R.font.montserrat_semibold, weight = FontWeight.SemiBold)
 )
 data class Typography(
     val authTitleText: TextStyle,
@@ -31,7 +32,12 @@ data class Typography(
     val page1SearchHintText: TextStyle,
     val page1CategoryText: TextStyle,
     val page1LatestTitleText: TextStyle,
-    val page1LatestOptionText: TextStyle
+    val page1LatestOptionText: TextStyle,
+    val page1LatestCategoryText: TextStyle,
+    val page1LatestHeaderText: TextStyle,
+    val page1LatestPriceText: TextStyle,
+    val page1SaleLabelText: TextStyle,
+    val page1SaleHeaderText: TextStyle
 )
 
 val typography = Typography(
@@ -118,7 +124,37 @@ val typography = Typography(
         fontFamily = Poppins,
         fontWeight = FontWeight.Medium,
         letterSpacing = (-0.3).sp
-    )
+    ),
+    page1LatestCategoryText = TextStyle(
+        fontSize = 6.sp,
+        fontFamily = Poppins,
+        fontWeight = FontWeight.SemiBold,
+        letterSpacing = (-0.3).sp
+    ),
+    page1LatestHeaderText = TextStyle(
+        fontSize = 9.sp,
+        fontFamily = Poppins,
+        fontWeight = FontWeight.SemiBold,
+        letterSpacing = (-0.3).sp
+    ),
+    page1LatestPriceText = TextStyle(
+        fontSize = 7.sp,
+        fontFamily = Poppins,
+        fontWeight = FontWeight.SemiBold,
+        letterSpacing = (-0.3).sp
+    ),
+    page1SaleLabelText = TextStyle(
+        fontSize = 10.sp,
+        fontFamily = Poppins,
+        fontWeight = FontWeight.SemiBold,
+        letterSpacing = (-0.3).sp
+    ),
+    page1SaleHeaderText = TextStyle(
+        fontSize = 13.sp,
+        fontFamily = Poppins,
+        fontWeight = FontWeight.SemiBold,
+        letterSpacing = (-0.3).sp
+    ),
 )
 
 
