@@ -22,6 +22,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -52,6 +53,7 @@ import com.elpablo.shop.ui.theme.AppTheme
 fun ScreenPage1(modifier: Modifier, viewModel: Page1ViewModel = hiltViewModel()) {
 
     val viewState by viewModel.viewState.collectAsState(Page1ViewState())
+    var searchInput by rememberSaveable { mutableStateOf("") }
 
     Column(modifier = modifier.fillMaxSize()) {
 
@@ -86,6 +88,10 @@ fun ScreenPage1(modifier: Modifier, viewModel: Page1ViewModel = hiltViewModel())
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 7.dp)
+                .padding(horizontal = 57.dp),
+            placeholder = stringResource(id = R.string.screen_page1_search_hint_text),
+            value = searchInput,
+            onValueChange = { searchInput = it }
         )
 
         //Categories
@@ -199,39 +205,56 @@ fun Page1AppBar(modifier: Modifier) {
 }
 
 @Composable
-fun Page1SearchInput(modifier: Modifier) {
-    var searchInput by rememberSaveable { mutableStateOf("") }
+fun Page1SearchInput(
+    modifier: Modifier,
+    placeholder: String,
+    value: String,
+    onValueChange: (String) -> Unit
+) {
     Box(
         modifier = modifier
             .height(29.dp)
-            .padding(horizontal = 56.dp)
             .clip(AppTheme.shape.authTextInputShape)
             .background(AppTheme.color.textInputBackground),
         contentAlignment = Alignment.Center
     ) {
         BasicTextField(
-            value = searchInput,
-            onValueChange = { searchInput = it },
+            value = value,
+            onValueChange = onValueChange,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.Center),
-            textStyle = AppTheme.typography.page1SearchHintText.copy(textAlign = TextAlign.Center),
+            textStyle = AppTheme.typography.authHintText.copy(textAlign = TextAlign.Center),
             singleLine = true,
-            decorationBox = {
+            decorationBox = { innerTextField ->
                 Box(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
-                    if (searchInput.isEmpty()) {
+                    IconButton(
+                        onClick = { /*TODO*/ },
+                        modifier = Modifier
+                            .padding(end = 16.dp)
+                            .size(12.dp)
+                            .align(Alignment.CenterEnd),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = null,
+                            tint = AppTheme.color.hintTextColor
+                        )
+                    }
+                    if (value.isEmpty()) {
                         Text(
-                            text = stringResource(id = R.string.screen_page1_search_hint_text),
+                            text = placeholder,
                             modifier = Modifier.fillMaxWidth(),
                             color = AppTheme.color.hintTextColor,
                             textAlign = TextAlign.Center,
-                            style = AppTheme.typography.page1SearchHintText
+                            style = AppTheme.typography.authHintText
                         )
                     }
                 }
+                innerTextField()
             }
         )
     }
@@ -246,7 +269,7 @@ fun Page1RowCategories(modifier: Modifier, viewState: Page1ViewState) {
         contentPadding = PaddingValues(horizontal = 15.dp)
     ) {
         if (viewState.category != null) {
-            items(count = viewState.category!!.size) { i ->
+            items(count = viewState.category.size) { i ->
                 Column(
                     modifier = Modifier
                         .width(48.dp),
@@ -260,13 +283,13 @@ fun Page1RowCategories(modifier: Modifier, viewState: Page1ViewState) {
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            painter = painterResource(id = viewState.category!![i].icon),
+                            painter = painterResource(id = viewState.category[i].icon),
                             contentDescription = null
                         )
                     }
 
                     Text(
-                        text = viewState.category!![i].label,
+                        text = viewState.category[i].label,
                         modifier = Modifier.padding(top = 11.dp),
                         color = AppTheme.color.page1CategoryTextColor,
                         style = AppTheme.typography.page1CategoryText
