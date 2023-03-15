@@ -30,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.elpablo.shop.R
@@ -37,7 +38,11 @@ import com.elpablo.shop.ui.navigation.Screen
 import com.elpablo.shop.ui.theme.AppTheme
 
 @Composable
-fun ScreenSignIn(navController: NavController, modifier: Modifier) {
+fun ScreenSignIn(
+    navController: NavController,
+    modifier: Modifier,
+    viewModel: SignInViewModel = hiltViewModel()
+) {
 
     var firstNameInput by rememberSaveable { mutableStateOf("") }
     var lastNameInput by rememberSaveable { mutableStateOf("") }
