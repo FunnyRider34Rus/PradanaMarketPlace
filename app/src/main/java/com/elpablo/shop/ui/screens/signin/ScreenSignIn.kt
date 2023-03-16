@@ -2,16 +2,10 @@ package com.elpablo.shop.ui.screens.signin
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -22,9 +16,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,6 +44,7 @@ fun ScreenSignIn(
 ) {
 
     val viewState by viewModel.viewState.collectAsState(SignInViewState())
+    val focusManager = LocalFocusManager.current
 
     if (viewState.isValidEnteredData) {
         navController.navigate(route = Screen.Page1.route)
@@ -77,6 +78,9 @@ fun ScreenSignIn(
             modifier = Modifier.padding(top = 60.dp),
             placeholder = stringResource(id = R.string.screen_sign_in_input_first_name_hint),
             value = viewState.textFirstName,
+            focusManager = focusManager,
+            keyboardType = KeyboardType.Text,
+            imeAction = ImeAction.Next,
             onValueChange = {
                 viewModel.obtainEvent(SignInEvent.EnteredFirstName(it))
             }
@@ -86,6 +90,9 @@ fun ScreenSignIn(
             modifier = Modifier.padding(top = 35.dp),
             placeholder = stringResource(id = R.string.screen_sign_in_input_last_name_hint),
             value = viewState.textLastName,
+            focusManager = focusManager,
+            keyboardType = KeyboardType.Text,
+            imeAction = ImeAction.Next,
             onValueChange = {
                 viewModel.obtainEvent(SignInEvent.EnteredLastName(it))
             }
@@ -95,6 +102,9 @@ fun ScreenSignIn(
             modifier = Modifier.padding(top = 35.dp),
             placeholder = stringResource(id = R.string.screen_sign_in_input_email_hint),
             value = viewState.textEMail,
+            focusManager = focusManager,
+            keyboardType = KeyboardType.Email,
+            imeAction = ImeAction.Done,
             onValueChange = {
                 viewModel.obtainEvent(SignInEvent.EnteredEMail(it))
             }
@@ -102,6 +112,7 @@ fun ScreenSignIn(
 
         Button(
             onClick = {
+                focusManager.clearFocus()
                 viewModel.obtainEvent(SignInEvent.ClickSignIn)
             },
             modifier = Modifier
@@ -134,7 +145,10 @@ fun ScreenSignIn(
             Text(
                 modifier = Modifier
                     .padding(start = 8.dp)
-                    .clickable { navController.navigate(route = Screen.Login.route) },
+                    .clickable {
+                        focusManager.clearFocus()
+                        navController.navigate(route = Screen.Login.route)
+                    },
                 text = stringResource(id = R.string.screen_sign_in_description_button),
                 color = AppTheme.color.linkTextColor,
                 style = AppTheme.typography.authLabelText
@@ -162,6 +176,9 @@ fun CustomTextField(
     modifier: Modifier,
     placeholder: String,
     value: String,
+    focusManager: FocusManager,
+    keyboardType: KeyboardType,
+    imeAction: ImeAction,
     onValueChange: (String) -> Unit
 ) {
     Box(
@@ -180,6 +197,15 @@ fun CustomTextField(
                 .align(Alignment.Center),
             textStyle = AppTheme.typography.authHintText.copy(textAlign = TextAlign.Center),
             singleLine = true,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                capitalization = KeyboardCapitalization.Sentences,
+                autoCorrect = true,
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            ),
+            keyboardActions = KeyboardActions(onNext = {
+                focusManager.moveFocus(FocusDirection.Down)
+            }),
             decorationBox = { innerTextField ->
                 Box(
                     modifier = Modifier.fillMaxWidth(),

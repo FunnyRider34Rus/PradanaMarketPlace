@@ -1,16 +1,18 @@
 package com.elpablo.shop.ui.screens.signin
 
 import androidx.lifecycle.ViewModel
-import com.elpablo.shop.domain.use_case.GetAllUsersUseCase
+import androidx.lifecycle.viewModelScope
+import com.elpablo.shop.domain.model.User
+import com.elpablo.shop.domain.use_case.SaveUserToDatabaseUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val getAuthStatus: GetAllUsersUseCase,
-    private val getAllUsers: GetAllUsersUseCase
+    private val saveUserToDatabaseUseCase: SaveUserToDatabaseUseCase
 ) : ViewModel() {
 
     private val _viewState = MutableStateFlow(SignInViewState())
@@ -49,9 +51,9 @@ class SignInViewModel @Inject constructor(
         val validFirstName = _viewState.value.textFirstName.isNotBlank()
         val validSecondName = _viewState.value.textLastName.isNotBlank()
         val validEMail =
-            _viewState.value.textEMail.isNotBlank() && _viewState.value.textEMail.contains("@") && _viewState.value.textEMail.contains(
-                "."
-            )
+            _viewState.value.textEMail.isNotBlank()
+                    && _viewState.value.textEMail.contains("@")
+                    && _viewState.value.textEMail.contains(".")
         if (!validFirstName) _viewState.value =
             _viewState.value.copy(errorMessage = "Please, enter First Name")
         if (!validSecondName) _viewState.value =
@@ -63,7 +65,16 @@ class SignInViewModel @Inject constructor(
 
     private fun saveUserToDatabase() {
         if (validateData()) {
-            //TODO("Сохранение пользователя в базу")
+            val user = User(
+                firstName = _viewState.value.textFirstName,
+                lastName = _viewState.value.textLastName,
+                eMail = _viewState.value.textEMail,
+                password = "",
+                photo = ""
+            )
+            viewModelScope.launch {
+                saveUserToDatabaseUseCase.invoke(user)
+            }
         }
     }
 }

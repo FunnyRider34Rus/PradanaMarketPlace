@@ -4,6 +4,7 @@ import com.elpablo.shop.domain.repository.AuthRepository
 import com.elpablo.shop.domain.repository.UserRepository
 import com.elpablo.shop.domain.use_case.GetAllUsersUseCase
 import com.elpablo.shop.domain.use_case.GetUserAuthStatus
+import com.elpablo.shop.domain.use_case.SaveUserToDatabaseUseCase
 import com.elpablo.shop.domain.use_case.SetAuthStatusUseCase
 import dagger.Module
 import dagger.Provides
@@ -23,13 +24,19 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun providesGetUserAuthStatusUseCase(repository: AuthRepository): GetUserAuthStatus {
+    fun provideGetUserAuthStatusUseCase(repository: AuthRepository): GetUserAuthStatus {
         return GetUserAuthStatus(repository)
     }
 
     @Provides
     @Singleton
-    fun providesSetAuthStatusUseCase(repository: AuthRepository): SetAuthStatusUseCase {
+    fun provideSetAuthStatusUseCase(repository: AuthRepository): SetAuthStatusUseCase {
         return SetAuthStatusUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSaveUserToDatabase(repository: UserRepository): SaveUserToDatabaseUseCase {
+        return SaveUserToDatabaseUseCase(repository)
     }
 }

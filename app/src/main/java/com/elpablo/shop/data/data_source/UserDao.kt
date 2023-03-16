@@ -1,9 +1,6 @@
 package com.elpablo.shop.data.data_source
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.elpablo.shop.domain.model.User
 import kotlinx.coroutines.flow.Flow
 
@@ -15,6 +12,6 @@ interface UserDao {
     @Query("SELECT * FROM user WHERE id = :id")
     suspend fun getUser(id: Int): User?
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Upsert
     suspend fun insertUser(user: User)
 }
