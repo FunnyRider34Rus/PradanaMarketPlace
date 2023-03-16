@@ -1,10 +1,11 @@
 package com.elpablo.shop.ui.screens.signin
 
 interface SignInEvent {
-    class InputFirstName(val firstName: String?) : SignInEvent
-    class InputLastName(val lastName: String?) : SignInEvent
-    class InputEMail(val eMail: String?) : SignInEvent
-    object ClickLogIn : SignInEvent
+    class EnteredFirstName(val enteredFirstName: String) : SignInEvent
+    class EnteredLastName(val enteredLastName: String): SignInEvent
+    class EnteredEMail(val enteredEMail: String): SignInEvent
+    object CloseAlertDialog: SignInEvent
+    object ClickSignIn : SignInEvent
     object ClickGoogleAuth : SignInEvent
     object ClickAppleAuth : SignInEvent
 }

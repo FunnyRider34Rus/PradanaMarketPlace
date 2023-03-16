@@ -78,7 +78,7 @@ fun ScreenLogin(navController: NavController, modifier: Modifier) {
         )
 
         Button(
-            onClick = { navController.navigate(Screen.Profile.route) },
+            onClick = { navController.navigate(Screen.Page1.route) },
             modifier = Modifier
                 .padding(top = 99.dp)
                 .height(46.dp)

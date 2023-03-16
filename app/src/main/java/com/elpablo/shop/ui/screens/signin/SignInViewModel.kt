@@ -18,12 +18,52 @@ class SignInViewModel @Inject constructor(
 
     fun obtainEvent(event: SignInEvent) {
         when (event) {
-            is SignInEvent.InputFirstName -> {}
-            is SignInEvent.InputLastName -> {}
-            is SignInEvent.InputEMail -> {}
-            is SignInEvent.ClickLogIn -> {}
+            is SignInEvent.EnteredEMail -> {
+                _viewState.value = _viewState.value.copy(textEMail = event.enteredEMail)
+            }
+
+            is SignInEvent.EnteredLastName -> {
+                _viewState.value = _viewState.value.copy(textLastName = event.enteredLastName)
+            }
+
+            is SignInEvent.EnteredFirstName -> {
+                _viewState.value = _viewState.value.copy(textFirstName = event.enteredFirstName)
+            }
+
+            is SignInEvent.CloseAlertDialog -> {
+                _viewState.value = _viewState.value.copy(isError = false)
+            }
+
+            is SignInEvent.ClickSignIn -> {
+                _viewState.value = _viewState.value.copy(isError = !validateData())
+                _viewState.value = _viewState.value.copy(isValidEnteredData = validateData())
+                saveUserToDatabase()
+            }
+
             is SignInEvent.ClickGoogleAuth -> {}
             is SignInEvent.ClickAppleAuth -> {}
+        }
+    }
+
+    private fun validateData(): Boolean {
+        val validFirstName = _viewState.value.textFirstName.isNotBlank()
+        val validSecondName = _viewState.value.textLastName.isNotBlank()
+        val validEMail =
+            _viewState.value.textEMail.isNotBlank() && _viewState.value.textEMail.contains("@") && _viewState.value.textEMail.contains(
+                "."
+            )
+        if (!validFirstName) _viewState.value =
+            _viewState.value.copy(errorMessage = "Please, enter First Name")
+        if (!validSecondName) _viewState.value =
+            _viewState.value.copy(errorMessage = "Please, enter Last Name")
+        if (!validEMail) _viewState.value =
+            _viewState.value.copy(errorMessage = "Please, enter valid e-mail address")
+        return validFirstName && validSecondName && validEMail
+    }
+
+    private fun saveUserToDatabase() {
+        if (validateData()) {
+            //TODO("Сохранение пользователя в базу")
         }
     }
 }

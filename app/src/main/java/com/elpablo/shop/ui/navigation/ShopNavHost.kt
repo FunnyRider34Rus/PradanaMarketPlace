@@ -42,7 +42,7 @@ fun ShopNavHost(
             }
 
             composable(route = Screen.Page1.route) {
-                ScreenPage1(modifier = modifier)
+                ScreenPage1(navController = navController, modifier = modifier)
             }
         }
     }

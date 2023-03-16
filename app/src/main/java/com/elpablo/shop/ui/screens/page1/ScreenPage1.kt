@@ -45,12 +45,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.elpablo.shop.R
 import com.elpablo.shop.ui.theme.AppTheme
 
 @Composable
-fun ScreenPage1(modifier: Modifier, viewModel: Page1ViewModel = hiltViewModel()) {
+fun ScreenPage1(navController: NavController, modifier: Modifier, viewModel: Page1ViewModel = hiltViewModel()) {
 
     val viewState by viewModel.viewState.collectAsState(Page1ViewState())
     var searchInput by rememberSaveable { mutableStateOf("") }

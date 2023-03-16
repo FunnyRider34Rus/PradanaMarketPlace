@@ -17,10 +17,8 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.elpablo.shop.R
+import com.elpablo.shop.core.components.ShowAlertDialog
 import com.elpablo.shop.ui.navigation.Screen
 import com.elpablo.shop.ui.theme.AppTheme
 
@@ -44,9 +43,11 @@ fun ScreenSignIn(
     viewModel: SignInViewModel = hiltViewModel()
 ) {
 
-    var firstNameInput by rememberSaveable { mutableStateOf("") }
-    var lastNameInput by rememberSaveable { mutableStateOf("") }
-    var emailInput by rememberSaveable { mutableStateOf("") }
+    val viewState by viewModel.viewState.collectAsState(SignInViewState())
+
+    if (viewState.isValidEnteredData) {
+        navController.navigate(route = Screen.Page1.route)
+    }
 
     Column(
         modifier = modifier
@@ -55,6 +56,16 @@ fun ScreenSignIn(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        if (viewState.isError) {
+            ShowAlertDialog(
+                modifier = Modifier,
+                title = "Error",
+                text = viewState.errorMessage,
+                onDismiss = { viewModel.obtainEvent(SignInEvent.CloseAlertDialog) }
+            )
+        }
+
 
         Text(
             text = stringResource(id = R.string.screen_sign_in_title_text),
@@ -65,26 +76,34 @@ fun ScreenSignIn(
         CustomTextField(
             modifier = Modifier.padding(top = 60.dp),
             placeholder = stringResource(id = R.string.screen_sign_in_input_first_name_hint),
-            value = firstNameInput,
-            onValueChange = { firstNameInput = it }
+            value = viewState.textFirstName,
+            onValueChange = {
+                viewModel.obtainEvent(SignInEvent.EnteredFirstName(it))
+            }
         )
 
         CustomTextField(
             modifier = Modifier.padding(top = 35.dp),
             placeholder = stringResource(id = R.string.screen_sign_in_input_last_name_hint),
-            value = lastNameInput,
-            onValueChange = { lastNameInput = it }
+            value = viewState.textLastName,
+            onValueChange = {
+                viewModel.obtainEvent(SignInEvent.EnteredLastName(it))
+            }
         )
 
         CustomTextField(
             modifier = Modifier.padding(top = 35.dp),
             placeholder = stringResource(id = R.string.screen_sign_in_input_email_hint),
-            value = emailInput,
-            onValueChange = { emailInput = it }
+            value = viewState.textEMail,
+            onValueChange = {
+                viewModel.obtainEvent(SignInEvent.EnteredEMail(it))
+            }
         )
 
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                viewModel.obtainEvent(SignInEvent.ClickSignIn)
+            },
             modifier = Modifier
                 .padding(top = 35.dp)
                 .height(46.dp)
@@ -92,13 +111,15 @@ fun ScreenSignIn(
             shape = AppTheme.shape.authButtonShape,
             colors = ButtonDefaults.buttonColors(
                 containerColor = AppTheme.color.buttonBackground,
-                contentColor = AppTheme.color.textButtonColor)
+                contentColor = AppTheme.color.textButtonColor
+            )
         ) {
             Text(
                 text = stringResource(id = R.string.screen_sign_in_button_text),
                 style = AppTheme.typography.authButtonText
             )
         }
+
 
         Row(
             modifier = Modifier
@@ -113,7 +134,7 @@ fun ScreenSignIn(
             Text(
                 modifier = Modifier
                     .padding(start = 8.dp)
-                    .clickable { navController.navigate(Screen.Login.route) },
+                    .clickable { navController.navigate(route = Screen.Login.route) },
                 text = stringResource(id = R.string.screen_sign_in_description_button),
                 color = AppTheme.color.linkTextColor,
                 style = AppTheme.typography.authLabelText
