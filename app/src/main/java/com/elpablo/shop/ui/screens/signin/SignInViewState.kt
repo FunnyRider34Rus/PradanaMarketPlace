@@ -6,9 +6,5 @@ data class SignInViewState(
     val textEMail: String = "",
     val isValidEnteredData: Boolean = false,
     val isError: Boolean = false,
-    val errorMessage: String = "",
-    val isLastNameError: String = "",
-    val isEMailError: String = "",
-    val showGoogleAuth: Boolean = false,
-    val showAppleAuth: Boolean = false
+    val errorMessage: String = ""
 )

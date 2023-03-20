@@ -9,9 +9,12 @@ interface UserDao {
     @Query("SELECT * FROM user")
     fun getAllUsers(): Flow<List<User>>
 
-    @Query("SELECT * FROM user WHERE id = :id")
-    suspend fun getUser(id: Int): User?
+    @Query("SELECT * FROM user WHERE firstName = :firstName")
+    suspend fun getUser(firstName: String): User?
 
     @Upsert
     suspend fun insertUser(user: User)
+
+    @Query("SELECT EXISTS (SELECT * FROM user WHERE firstName = :firstName)")
+    suspend fun existFirstName(firstName: String): Boolean
 }

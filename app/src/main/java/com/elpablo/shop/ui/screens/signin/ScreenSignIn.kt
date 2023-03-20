@@ -10,9 +10,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,6 +44,15 @@ fun ScreenSignIn(
     val viewState by viewModel.viewState.collectAsState(SignInViewState())
     val focusManager = LocalFocusManager.current
 
+    if (viewState.isError) {
+        ShowAlertDialog(
+            modifier = Modifier,
+            title = "Error",
+            text = viewState.errorMessage,
+            onDismiss = { viewModel.onEvent(SignInEvent.CloseAlertDialog) }
+        )
+    }
+
     if (viewState.isValidEnteredData) {
         navController.navigate(route = Screen.Page1.route)
     }
@@ -57,17 +64,6 @@ fun ScreenSignIn(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        if (viewState.isError) {
-            ShowAlertDialog(
-                modifier = Modifier,
-                title = "Error",
-                text = viewState.errorMessage,
-                onDismiss = { viewModel.obtainEvent(SignInEvent.CloseAlertDialog) }
-            )
-        }
-
-
         Text(
             text = stringResource(id = R.string.screen_sign_in_title_text),
             color = AppTheme.color.primaryTextColor,
@@ -82,7 +78,7 @@ fun ScreenSignIn(
             keyboardType = KeyboardType.Text,
             imeAction = ImeAction.Next,
             onValueChange = {
-                viewModel.obtainEvent(SignInEvent.EnteredFirstName(it))
+                viewModel.onEvent(SignInEvent.EnteredFirstName(it))
             }
         )
 
@@ -94,7 +90,7 @@ fun ScreenSignIn(
             keyboardType = KeyboardType.Text,
             imeAction = ImeAction.Next,
             onValueChange = {
-                viewModel.obtainEvent(SignInEvent.EnteredLastName(it))
+                viewModel.onEvent(SignInEvent.EnteredLastName(it))
             }
         )
 
@@ -106,14 +102,14 @@ fun ScreenSignIn(
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Done,
             onValueChange = {
-                viewModel.obtainEvent(SignInEvent.EnteredEMail(it))
+                viewModel.onEvent(SignInEvent.EnteredEMail(it))
             }
         )
 
         Button(
             onClick = {
                 focusManager.clearFocus()
-                viewModel.obtainEvent(SignInEvent.ClickSignIn)
+                viewModel.onEvent(SignInEvent.ClickSignIn)
             },
             modifier = Modifier
                 .padding(top = 35.dp)
@@ -159,14 +155,14 @@ fun ScreenSignIn(
             modifier = Modifier.padding(top = 70.dp),
             icon = painterResource(id = R.drawable.google_logo),
             description = stringResource(id = R.string.screen_sign_in_button_with_google_text),
-            onClick = { /*TODO*/ }
+            onClick = { viewModel.onEvent(SignInEvent.ClickGoogleAuth) }
         )
 
         TextButtonWithIcon(
             modifier = Modifier.padding(top = 38.dp),
             icon = painterResource(id = R.drawable.apple_logo),
             description = stringResource(id = R.string.screen_sign_in_button_with_apple_text),
-            onClick = { /*TODO*/ }
+            onClick = { viewModel.onEvent(SignInEvent.ClickAppleAuth) }
         )
     }
 }
@@ -236,7 +232,7 @@ fun TextButtonWithIcon(
 ) {
     Row(
         modifier = modifier
-            .clickable { onClick },
+            .clickable(onClick = onClick),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {

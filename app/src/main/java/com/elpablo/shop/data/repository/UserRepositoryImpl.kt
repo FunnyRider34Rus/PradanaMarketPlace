@@ -12,11 +12,15 @@ class UserRepositoryImpl(
         return userDao.getAllUsers()
     }
 
-    override suspend fun getUser(id: Int): User? {
-        return userDao.getUser(id)
+    override suspend fun getUser(firstName: String): User? {
+        return userDao.getUser(firstName)
     }
 
     override suspend fun insertUser(user: User) {
         userDao.insertUser(user)
+    }
+
+    override suspend fun isUserExisted(firstName: String): Boolean {
+        return userDao.existFirstName(firstName)
     }
 }

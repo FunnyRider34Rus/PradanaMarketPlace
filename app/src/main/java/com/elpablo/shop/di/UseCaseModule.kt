@@ -2,10 +2,7 @@ package com.elpablo.shop.di
 
 import com.elpablo.shop.domain.repository.AuthRepository
 import com.elpablo.shop.domain.repository.UserRepository
-import com.elpablo.shop.domain.use_case.GetAllUsersUseCase
-import com.elpablo.shop.domain.use_case.GetUserAuthStatus
-import com.elpablo.shop.domain.use_case.SaveUserToDatabaseUseCase
-import com.elpablo.shop.domain.use_case.SetAuthStatusUseCase
+import com.elpablo.shop.domain.use_case.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,5 +35,11 @@ object UseCaseModule {
     @Singleton
     fun provideSaveUserToDatabase(repository: UserRepository): SaveUserToDatabaseUseCase {
         return SaveUserToDatabaseUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideIfUserAlreadyExisted(repository: UserRepository): CheckIfUserAlreadyExist {
+        return CheckIfUserAlreadyExist(repository)
     }
 }
