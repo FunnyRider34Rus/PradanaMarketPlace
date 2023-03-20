@@ -3,37 +3,57 @@ package com.elpablo.shop.ui.screens.login
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.elpablo.shop.R
+import com.elpablo.shop.core.components.ShowAlertDialog
 import com.elpablo.shop.ui.navigation.Screen
 import com.elpablo.shop.ui.theme.AppTheme
 
 @Composable
-fun ScreenLogin(navController: NavController, modifier: Modifier) {
+fun ScreenLogin(
+    navController: NavController,
+    modifier: Modifier,
+    viewModel: LoginViewModel = hiltViewModel()
+) {
 
-    var firstNameInput by rememberSaveable { mutableStateOf("") }
-    var passwordInput by rememberSaveable { mutableStateOf("") }
+    val viewState by viewModel.viewState.collectAsState(LoginViewState())
+    val focusManager = LocalFocusManager.current
+
+    if (viewState.isError) {
+        ShowAlertDialog(
+            modifier = Modifier,
+            title = "Error",
+            text = viewState.errorMessage,
+            onDismiss = { viewModel.onEvent(LoginEvent.CloseAlertDialog) }
+        )
+    }
+
+    if (viewState.isValidEnteredData) {
+        navController.navigate(route = Screen.Page1.route) {
+            launchSingleTop = true
+        }
+    }
 
     Column(
         modifier = modifier
@@ -53,8 +73,11 @@ fun ScreenLogin(navController: NavController, modifier: Modifier) {
                 .fillMaxWidth()
                 .padding(top = 72.dp),
             placeholder = stringResource(id = R.string.screen_login_input_first_name_hint),
-            value = firstNameInput,
-            onValueChange = { firstNameInput = it }
+            value = viewState.textFirstName,
+            focusManager = focusManager,
+            keyboardType = KeyboardType.Text,
+            imeAction = ImeAction.Next,
+            onValueChange = { viewModel.onEvent(LoginEvent.EnteredFirstName(it)) }
         )
 
         CustomPasswordTextField(
@@ -62,12 +85,12 @@ fun ScreenLogin(navController: NavController, modifier: Modifier) {
                 .fillMaxWidth()
                 .padding(top = 35.dp),
             placeholder = stringResource(id = R.string.screen_login_input_password_hint),
-            value = passwordInput,
-            onValueChange = { passwordInput = it }
+            value = viewState.textPassword,
+            onValueChange = { viewModel.onEvent(LoginEvent.EnteredPassword(it)) }
         )
 
         Button(
-            onClick = { navController.navigate(Screen.Page1.route) },
+            onClick = { viewModel.onEvent(LoginEvent.ClickLogin) },
             modifier = Modifier
                 .padding(top = 99.dp)
                 .height(46.dp)
@@ -91,6 +114,9 @@ fun CustomTextField(
     modifier: Modifier,
     placeholder: String,
     value: String,
+    focusManager: FocusManager,
+    keyboardType: KeyboardType,
+    imeAction: ImeAction,
     onValueChange: (String) -> Unit
 ) {
     Box(
@@ -108,6 +134,15 @@ fun CustomTextField(
                 .align(Alignment.Center),
             textStyle = AppTheme.typography.authHintText.copy(textAlign = TextAlign.Center),
             singleLine = true,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                capitalization = KeyboardCapitalization.Sentences,
+                autoCorrect = true,
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            ),
+            keyboardActions = KeyboardActions(onNext = {
+                focusManager.moveFocus(FocusDirection.Down)
+            }),
             decorationBox = { innerTextField ->
                 Box(
                     modifier = Modifier.fillMaxWidth(),

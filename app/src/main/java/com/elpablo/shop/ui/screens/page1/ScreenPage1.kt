@@ -15,8 +15,9 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,7 +40,6 @@ import com.elpablo.shop.ui.theme.AppTheme
 fun ScreenPage1(navController: NavController, modifier: Modifier, viewModel: Page1ViewModel = hiltViewModel()) {
 
     val viewState by viewModel.viewState.collectAsState(Page1ViewState())
-    var searchInput by rememberSaveable { mutableStateOf("") }
 
     Column(modifier = modifier.fillMaxSize()) {
 
@@ -76,8 +76,8 @@ fun ScreenPage1(navController: NavController, modifier: Modifier, viewModel: Pag
                 .padding(top = 7.dp)
                 .padding(horizontal = 57.dp),
             placeholder = stringResource(id = R.string.screen_page1_search_hint_text),
-            value = searchInput,
-            onValueChange = { searchInput = it }
+            value = viewState.searchInput,
+            onValueChange = { viewModel.onEvent(Page1Event.SearchInput(it)) }
         )
 
         //Categories

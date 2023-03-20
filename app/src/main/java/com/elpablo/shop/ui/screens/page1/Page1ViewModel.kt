@@ -17,6 +17,12 @@ class Page1ViewModel @Inject constructor() : ViewModel() {
         getProductCategory()
     }
 
+    fun onEvent(event: Page1Event) {
+        when(event) {
+            is Page1Event.SearchInput -> _viewState.value = _viewState.value.copy(searchInput = event.input)
+        }
+    }
+
     private fun getProductCategory() {
         _viewState.value = _viewState.value.copy(category = categories)
     }

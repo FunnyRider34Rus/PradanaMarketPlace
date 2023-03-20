@@ -56,12 +56,12 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material:material")
 
     //Room
     val room_version = "2.5.0"
     implementation("androidx.room:room-ktx:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
-
 
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

@@ -34,7 +34,7 @@ fun ScreenProfile(navController: NavController, modifier: Modifier) {
             title = stringResource(id = R.string.screen_profile_title_text),
             navigationAction = {
                 IconButton(
-                    onClick = { navController.popBackStack() }
+                    onClick = { navController.navigate(Screen.Page1.route) }
                 ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,

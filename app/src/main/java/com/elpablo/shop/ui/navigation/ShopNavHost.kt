@@ -1,5 +1,6 @@
 package com.elpablo.shop.ui.navigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -26,22 +27,25 @@ fun ShopNavHost(
         val modifier = Modifier.padding(paddingValue)
         NavHost(
             navController = navController,
-            startDestination = startDestination,
-            route = Graph.NAVGRAPH.route
+            startDestination = startDestination
         ) {
             composable(route = Screen.SignIn.route) {
+                Log.d("navbar", "screen.signin")
                 ScreenSignIn(navController = navController, modifier = modifier)
             }
 
             composable(route = Screen.Login.route) {
+                Log.d("navbar", "screen.login")
                 ScreenLogin(navController = navController, modifier = modifier)
             }
 
             composable(route = Screen.Profile.route) {
+                Log.d("navbar", "screen.profile")
                 ScreenProfile(navController = navController, modifier = modifier)
             }
 
             composable(route = Screen.Page1.route) {
+                Log.d("navbar", "screen.page1")
                 ScreenPage1(navController = navController, modifier = modifier)
             }
         }
@@ -59,7 +63,4 @@ sealed class Screen(val route: String) {
     object Basket : Screen(route = "basket")
 
     object Notification : Screen(route = "notification")
-}
-sealed class Graph(val route: String) {
-    object NAVGRAPH : Graph("root_nav_graph")
 }

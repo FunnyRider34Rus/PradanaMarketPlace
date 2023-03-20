@@ -1,10 +1,11 @@
 package com.elpablo.shop.ui.navigation
 
+import androidx.annotation.DrawableRes
 import com.elpablo.shop.R
 
 sealed class BottomBarItems(
     val route: String,
-    val icon: Int
+    @DrawableRes val icon:  Int
 ) {
     object Home : BottomBarItems(
         route = Screen.Page1.route,
