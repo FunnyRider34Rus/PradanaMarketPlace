@@ -1,9 +1,10 @@
 package com.elpablo.shop.di
 
-import android.app.Application
-import androidx.room.Room
-import com.elpablo.shop.data.data_source.UserDatabase
-import com.elpablo.shop.data.repository.UserRepositoryImpl
+import com.elpablo.shop.data.local.data_source.UserDatabase
+import com.elpablo.shop.data.local.repository.UserRepositoryImpl
+import com.elpablo.shop.data.remote.ShopApi
+import com.elpablo.shop.data.remote.repository.ContentRepositoryImpl
+import com.elpablo.shop.domain.repository.ContentRepository
 import com.elpablo.shop.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
@@ -17,17 +18,13 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideUserDatabase(app: Application): UserDatabase {
-        return Room.databaseBuilder(
-            app,
-            UserDatabase::class.java,
-            UserDatabase.USERDATABASE_NAME
-        ).build()
+    fun providesUserRepository(database: UserDatabase): UserRepository {
+        return UserRepositoryImpl(database.userDao)
     }
 
     @Provides
     @Singleton
-    fun providesUserRepository(database: UserDatabase): UserRepository {
-        return UserRepositoryImpl(database.userDao)
+    fun providesContentRepository(api: ShopApi): ContentRepository {
+        return ContentRepositoryImpl(api)
     }
 }

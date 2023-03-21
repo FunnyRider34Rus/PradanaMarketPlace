@@ -2,7 +2,7 @@ package com.elpablo.shop.ui.screens.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.elpablo.shop.domain.use_case.CheckIfUserAlreadyExist
+import com.elpablo.shop.domain.use_case.CheckIfUserAlreadyExistUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val isUserAlreadyExist: CheckIfUserAlreadyExist) : ViewModel() {
+class LoginViewModel @Inject constructor(private val isUserAlreadyExist: CheckIfUserAlreadyExistUseCase) : ViewModel() {
 
     private val _viewState = MutableStateFlow(LoginViewState())
     val viewState: StateFlow<LoginViewState> = _viewState

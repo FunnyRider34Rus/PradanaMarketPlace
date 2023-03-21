@@ -3,7 +3,7 @@ package com.elpablo.shop.ui.screens.signin
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.elpablo.shop.domain.model.User
-import com.elpablo.shop.domain.use_case.CheckIfUserAlreadyExist
+import com.elpablo.shop.domain.use_case.CheckIfUserAlreadyExistUseCase
 import com.elpablo.shop.domain.use_case.SaveUserToDatabaseUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val isUserAlreadyExist: CheckIfUserAlreadyExist,
+    private val isUserAlreadyExist: CheckIfUserAlreadyExistUseCase,
     private val saveUserToDatabaseUseCase: SaveUserToDatabaseUseCase
 ) : ViewModel() {
 

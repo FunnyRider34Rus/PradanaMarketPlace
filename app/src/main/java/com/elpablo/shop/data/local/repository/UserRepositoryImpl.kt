@@ -1,6 +1,6 @@
-package com.elpablo.shop.data.repository
+package com.elpablo.shop.data.local.repository
 
-import com.elpablo.shop.data.data_source.UserDao
+import com.elpablo.shop.data.local.data_source.UserDao
 import com.elpablo.shop.domain.model.User
 import com.elpablo.shop.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow

@@ -1,4 +1,4 @@
-package com.elpablo.shop.data.repository
+package com.elpablo.shop.data.local.repository
 
 import android.app.Activity
 import android.content.Context

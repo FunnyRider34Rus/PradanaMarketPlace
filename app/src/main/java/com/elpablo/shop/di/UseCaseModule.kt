@@ -39,7 +39,7 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideIfUserAlreadyExisted(repository: UserRepository): CheckIfUserAlreadyExist {
-        return CheckIfUserAlreadyExist(repository)
+    fun provideIfUserAlreadyExisted(repository: UserRepository): CheckIfUserAlreadyExistUseCase {
+        return CheckIfUserAlreadyExistUseCase(repository)
     }
 }

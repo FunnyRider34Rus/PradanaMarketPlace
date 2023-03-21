@@ -1,4 +1,4 @@
-package com.elpablo.shop.data.data_source
+package com.elpablo.shop.data.local.data_source
 
 import androidx.room.*
 import com.elpablo.shop.domain.model.User
