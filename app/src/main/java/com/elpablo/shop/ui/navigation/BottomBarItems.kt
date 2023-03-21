@@ -5,7 +5,7 @@ import com.elpablo.shop.R
 
 sealed class BottomBarItems(
     val route: String,
-    @DrawableRes val icon:  Int
+    @DrawableRes val icon: Int
 ) {
     object Home : BottomBarItems(
         route = Screen.Page1.route,
@@ -26,6 +26,7 @@ sealed class BottomBarItems(
         route = Screen.Notification.route,
         icon = R.drawable.ic_notification
     )
+
     object Profile : BottomBarItems(
         route = Screen.Profile.route,
         icon = R.drawable.ic_profile

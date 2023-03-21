@@ -48,6 +48,7 @@ class SignInViewModel @Inject constructor(
                 _viewState.value = _viewState.value.copy(errorMessage = "SignIn with Google")
                 _viewState.value = _viewState.value.copy(isValidEnteredData = true)
             }
+
             is SignInEvent.ClickAppleAuth -> {
                 _viewState.value = _viewState.value.copy(isError = true)
                 _viewState.value = _viewState.value.copy(errorMessage = "SignIn with Apple")

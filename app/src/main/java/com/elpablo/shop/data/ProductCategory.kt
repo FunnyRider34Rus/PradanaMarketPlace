@@ -1,13 +1,14 @@
 package com.elpablo.shop.data
 
+import androidx.annotation.DrawableRes
 import com.elpablo.shop.R
 
 data class ProductCategory(
     val label: String,
-    val icon: Int
+    @DrawableRes val icon: Int
 )
 
-val categories = listOf<ProductCategory>(
+val categories = listOf(
     ProductCategory(
         label = "Phones",
         icon = R.drawable.ic_phones

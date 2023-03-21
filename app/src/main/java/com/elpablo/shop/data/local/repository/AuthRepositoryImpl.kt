@@ -6,7 +6,8 @@ import com.elpablo.shop.domain.repository.AuthRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class AuthRepositoryImpl @Inject constructor(@ApplicationContext private val context: Context): AuthRepository {
+class AuthRepositoryImpl @Inject constructor(@ApplicationContext private val context: Context) :
+    AuthRepository {
     override suspend fun isUserAuthorized(): Boolean? {
         val sharedPref = (context as Activity?)?.getPreferences(Context.MODE_PRIVATE)
         return sharedPref?.getBoolean("auth", false)

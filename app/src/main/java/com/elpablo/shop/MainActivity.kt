@@ -15,7 +15,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ShopTheme {
-                ShopNavHost(navController = rememberNavController(), startDestination = Screen.SignIn.route)
+                ShopNavHost(
+                    navController = rememberNavController(),
+                    startDestination = Screen.SignIn.route
+                )
             }
         }
     }

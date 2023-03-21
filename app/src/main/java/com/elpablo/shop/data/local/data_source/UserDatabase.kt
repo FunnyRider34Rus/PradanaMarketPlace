@@ -8,7 +8,7 @@ import com.elpablo.shop.domain.model.User
     entities = [User::class],
     version = 1
 )
-abstract class UserDatabase: RoomDatabase() {
+abstract class UserDatabase : RoomDatabase() {
     abstract val userDao: UserDao
 
     companion object {

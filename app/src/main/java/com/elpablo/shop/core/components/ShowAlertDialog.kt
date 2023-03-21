@@ -13,15 +13,15 @@ fun ShowAlertDialog(
     text: String,
     onDismiss: () -> Unit
 ) {
-        AlertDialog(
-            onDismissRequest =  onDismiss,
-            confirmButton = {
-                TextButton(onClick = onDismiss) {
-                    Text(text = "Ok")
-                }
-            },
-            modifier = modifier,
-            title = { Text(text = title) },
-            text = { Text(text = text) }
-        )
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(text = "Ok")
+            }
+        },
+        modifier = modifier,
+        title = { Text(text = title) },
+        text = { Text(text = text) }
+    )
 }

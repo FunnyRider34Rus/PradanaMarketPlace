@@ -1,8 +1,9 @@
 package com.elpablo.shop.data.remote.dto
 
-data class LatestContentDto(
+data class FlashSale(
     val category: String,
+    val discount: Int,
     val image_url: String,
     val name: String,
-    val price: Int
+    val price: Double
 )

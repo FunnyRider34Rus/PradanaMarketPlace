@@ -2,7 +2,18 @@ package com.elpablo.shop.ui.screens.page1
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
@@ -12,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -37,7 +49,11 @@ import com.elpablo.shop.R
 import com.elpablo.shop.ui.theme.AppTheme
 
 @Composable
-fun ScreenPage1(navController: NavController, modifier: Modifier, viewModel: Page1ViewModel = hiltViewModel()) {
+fun ScreenPage1(
+    navController: NavController,
+    modifier: Modifier,
+    viewModel: Page1ViewModel = hiltViewModel()
+) {
 
     val viewState by viewModel.viewState.collectAsState(Page1ViewState())
 
@@ -88,65 +104,95 @@ fun ScreenPage1(navController: NavController, modifier: Modifier, viewModel: Pag
             viewState = viewState
         )
 
-        //Latest block header
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 29.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = stringResource(id = R.string.screen_page1_latest_title_text),
-                modifier = Modifier.padding(start = 11.dp),
-                style = AppTheme.typography.page1LatestTitleText
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = stringResource(id = R.string.screen_page1_latest_option_text),
-                modifier = Modifier.padding(end = 11.dp),
-                color = AppTheme.color.secondaryTextColor,
-                style = AppTheme.typography.page1LatestOptionText
-            )
+        if (viewState.isLoading) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        } else {
+            //Latest block header
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 29.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(id = R.string.screen_page1_latest_title_text),
+                    modifier = Modifier.padding(start = 11.dp),
+                    style = AppTheme.typography.page1LatestTitleText
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Text(
+                    text = stringResource(id = R.string.screen_page1_latest_option_text),
+                    modifier = Modifier.padding(end = 11.dp),
+                    color = AppTheme.color.secondaryTextColor,
+                    style = AppTheme.typography.page1LatestOptionText
+                )
+            }
+
+
+            LazyRow(
+                state = rememberLazyListState(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(horizontal = 15.dp)
+            ) {
+                if (viewState.latest != null) {
+                    items(count = viewState.latest!!.size) { i ->
+                        Page1LatestCard(
+                            modifier = Modifier.padding(horizontal = 11.dp),
+                            image = viewState.latest!![i].image_url,
+                            category = viewState.latest!![i].category,
+                            title = viewState.latest!![i].name,
+                            price = viewState.latest!![i].price.toString()
+                        )
+                    }
+                }
+            }
+
+            //Sale block header
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 29.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(id = R.string.screen_page1_sale_title_text),
+                    modifier = Modifier.padding(start = 11.dp),
+                    style = AppTheme.typography.page1LatestTitleText
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Text(
+                    text = stringResource(id = R.string.screen_page1_sale_option_text),
+                    modifier = Modifier.padding(end = 11.dp),
+                    color = AppTheme.color.secondaryTextColor,
+                    style = AppTheme.typography.page1LatestOptionText
+                )
+            }
+
+            LazyRow(
+                state = rememberLazyListState(),
+                horizontalArrangement = Arrangement.spacedBy(9.dp),
+                contentPadding = PaddingValues(horizontal = 15.dp)
+            ) {
+                if (viewState.latest != null) {
+                    items(count = viewState.sale!!.size) { i ->
+                        Page1SaleCard(
+                            modifier = Modifier.padding(11.dp),
+                            image = viewState.sale!![i].image_url,
+                            magazine = "",
+                            sale = viewState.sale!![i].discount,
+                            category = viewState.sale!![i].category,
+                            title = viewState.sale!![i].name,
+                            price = viewState.sale!![i].price.toString()
+                        )
+                    }
+                }
+            }
         }
-
-        Page1LatestCard(
-            modifier = Modifier.padding(horizontal = 11.dp),
-            image = "https://www.dhresource.com/0x0/f2/albu/g8/M01/9D/19/rBVaV1079WeAEW-AAARn9m_Dmh0487.jpg",
-            category = "Phones",
-            title = "Samsung S10",
-            price = "1000"
-        )
-
-        //Sale block header
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 29.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = stringResource(id = R.string.screen_page1_sale_title_text),
-                modifier = Modifier.padding(start = 11.dp),
-                style = AppTheme.typography.page1LatestTitleText
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = stringResource(id = R.string.screen_page1_sale_option_text),
-                modifier = Modifier.padding(end = 11.dp),
-                color = AppTheme.color.secondaryTextColor,
-                style = AppTheme.typography.page1LatestOptionText
-            )
-        }
-
-        Page1SaleCard(
-            modifier = Modifier.padding(11.dp),
-            image = "https://newbalance.ru/upload/iblock/697/iz997hht_nb_02_i.jpg",
-            magazine = "",
-            sale = 30,
-            category = "Kids",
-            title = "New Balance Sneakers",
-            price = "22.5"
-        )
     }
 }
 

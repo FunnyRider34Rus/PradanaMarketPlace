@@ -10,22 +10,26 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val isUserAlreadyExist: CheckIfUserAlreadyExistUseCase) : ViewModel() {
+class LoginViewModel @Inject constructor(private val isUserAlreadyExist: CheckIfUserAlreadyExistUseCase) :
+    ViewModel() {
 
     private val _viewState = MutableStateFlow(LoginViewState())
     val viewState: StateFlow<LoginViewState> = _viewState
 
     fun onEvent(event: LoginEvent) {
-        when(event) {
+        when (event) {
             is LoginEvent.EnteredFirstName -> {
                 _viewState.value = _viewState.value.copy(textFirstName = event.enteredFirstName)
             }
+
             is LoginEvent.EnteredPassword -> {
                 _viewState.value = _viewState.value.copy(textPassword = event.enteredPassword)
             }
+
             is LoginEvent.ClickLogin -> {
                 validateData()
             }
+
             is LoginEvent.CloseAlertDialog -> {
                 _viewState.value = _viewState.value.copy(isError = false)
             }
@@ -37,7 +41,8 @@ class LoginViewModel @Inject constructor(private val isUserAlreadyExist: CheckIf
             val isUserExist = isUserAlreadyExist.invoke(_viewState.value.textFirstName)
             if (!isUserExist) {
                 _viewState.value = _viewState.value.copy(isError = true)
-                _viewState.value = _viewState.value.copy(errorMessage = "User with this FirstName not found. Please, SignUp.")
+                _viewState.value =
+                    _viewState.value.copy(errorMessage = "User with this FirstName not found. Please, SignUp.")
             } else {
                 _viewState.value = _viewState.value.copy(isValidEnteredData = true)
             }

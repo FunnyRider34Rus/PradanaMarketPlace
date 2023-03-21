@@ -19,19 +19,19 @@ fun ShopTheme(
 
 object AppTheme {
     val color: Colors
-    @Composable
-    @ReadOnlyComposable
-    get() = LocalColorProvider.current
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalColorProvider.current
 
     val typography: Typography
-    @Composable
-    @ReadOnlyComposable
-    get() = LocalTypographyProvider.current
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalTypographyProvider.current
 
     val shape: Shapes
-    @Composable
-    @ReadOnlyComposable
-    get() = LocalShapeProvider.current
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalShapeProvider.current
 }
 
 val LocalColorProvider = staticCompositionLocalOf<Colors> {
