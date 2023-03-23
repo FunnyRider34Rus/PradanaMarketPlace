@@ -40,7 +40,6 @@ class SignInViewModel @Inject constructor(
 
             is SignInEvent.ClickSignIn -> {
                 validateData()
-                saveUserToDatabase()
             }
 
             is SignInEvent.ClickGoogleAuth -> {
@@ -80,6 +79,7 @@ class SignInViewModel @Inject constructor(
                 _viewState.value.copy(isValidEnteredData = validFirstName && validSecondName && validEMail && !isUserExist)
             if (_viewState.value.isValidEnteredData) {
                 _viewState.value = _viewState.value.copy(isError = false)
+                saveUserToDatabase()
             } else {
                 _viewState.value = _viewState.value.copy(isError = true)
             }
@@ -87,17 +87,16 @@ class SignInViewModel @Inject constructor(
     }
 
     private fun saveUserToDatabase() {
-        if (_viewState.value.isValidEnteredData) {
-            val user = User(
-                firstName = _viewState.value.textFirstName,
-                lastName = _viewState.value.textLastName,
-                eMail = _viewState.value.textEMail,
-                password = "",
-                photo = ""
-            )
-            viewModelScope.launch {
-                saveUserToDatabaseUseCase.invoke(user)
-            }
+
+        val user = User(
+            firstName = _viewState.value.textFirstName,
+            lastName = _viewState.value.textLastName,
+            eMail = _viewState.value.textEMail,
+            password = "",
+            photo = ""
+        )
+        viewModelScope.launch {
+            saveUserToDatabaseUseCase.invoke(user)
         }
     }
 }

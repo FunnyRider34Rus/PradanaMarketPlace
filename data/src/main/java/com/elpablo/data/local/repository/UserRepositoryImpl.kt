@@ -8,7 +8,7 @@ import com.elpablo.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class UserRepositoryImpl(
+class UserRepositoryImpl (
     private val userDao: UserDao
 ) : UserRepository {
     override fun getAllUsers(): Flow<List<User>> {

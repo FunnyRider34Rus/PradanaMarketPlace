@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.elpablo.domain.model.User
 
-@Entity
+@Entity(tableName = "user")
 data class UserRoom(
     @PrimaryKey val firstName: String,
     @ColumnInfo val lastName: String,
