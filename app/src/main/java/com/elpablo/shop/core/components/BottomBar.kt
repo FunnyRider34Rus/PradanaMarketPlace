@@ -15,7 +15,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.elpablo.shop.ui.navigation.BottomBarItems
+import com.elpablo.shop.navigation.BottomBarItems
 import com.elpablo.shop.ui.theme.AppTheme
 
 @Composable

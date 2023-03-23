@@ -1,4 +1,4 @@
-package com.elpablo.shop.ui.navigation
+package com.elpablo.shop.navigation
 
 import androidx.annotation.DrawableRes
 import com.elpablo.shop.R

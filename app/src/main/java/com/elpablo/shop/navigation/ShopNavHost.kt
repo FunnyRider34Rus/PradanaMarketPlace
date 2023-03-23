@@ -1,4 +1,4 @@
-package com.elpablo.shop.ui.navigation
+package com.elpablo.shop.navigation
 
 import android.util.Log
 import androidx.compose.foundation.layout.padding

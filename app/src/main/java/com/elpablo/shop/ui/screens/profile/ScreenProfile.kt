@@ -1,9 +1,10 @@
 package com.elpablo.shop.ui.screens.profile
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowRight
@@ -12,24 +13,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.elpablo.shop.R
-import com.elpablo.shop.ui.navigation.Screen
+import com.elpablo.shop.navigation.Screen
+import com.elpablo.shop.ui.screens.profile.components.ProfileMenuItem
+import com.elpablo.shop.ui.screens.profile.components.ProfileTopAppBar
 import com.elpablo.shop.ui.theme.AppTheme
 
 @Composable
 fun ScreenProfile(navController: NavController, modifier: Modifier) {
 
     Column(modifier = modifier.fillMaxSize()) {
-        TopAppBar(
+        ProfileTopAppBar(
             modifier = Modifier.fillMaxWidth(),
             title = stringResource(id = R.string.screen_profile_title_text),
             navigationAction = {
@@ -46,7 +46,9 @@ fun ScreenProfile(navController: NavController, modifier: Modifier) {
         )
 
         Column(
-            modifier = Modifier.padding(horizontal = 43.dp),
+            modifier = Modifier
+                .padding(horizontal = 43.dp)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
@@ -105,7 +107,7 @@ fun ScreenProfile(navController: NavController, modifier: Modifier) {
                 }
             }
 
-            MenuItem(
+            ProfileMenuItem(
                 modifier = Modifier.padding(top = 14.dp),
                 icon = painterResource(id = R.drawable.card),
                 text = stringResource(id = R.string.screen_profile_menu_item_trade_store_text),
@@ -117,7 +119,7 @@ fun ScreenProfile(navController: NavController, modifier: Modifier) {
                 }
             )
 
-            MenuItem(
+            ProfileMenuItem(
                 modifier = Modifier.padding(top = 14.dp),
                 icon = painterResource(id = R.drawable.card),
                 text = stringResource(id = R.string.screen_profile_menu_item_payment_method_text),
@@ -129,7 +131,7 @@ fun ScreenProfile(navController: NavController, modifier: Modifier) {
                 }
             )
 
-            MenuItem(
+            ProfileMenuItem(
                 modifier = Modifier.padding(top = 14.dp),
                 icon = painterResource(id = R.drawable.card),
                 text = stringResource(id = R.string.screen_profile_menu_item_balance_text),
@@ -137,7 +139,7 @@ fun ScreenProfile(navController: NavController, modifier: Modifier) {
 
             )
 
-            MenuItem(
+            ProfileMenuItem(
                 modifier = Modifier.padding(top = 14.dp),
                 icon = painterResource(id = R.drawable.card),
                 text = stringResource(id = R.string.screen_profile_menu_item_trade_history_text),
@@ -149,7 +151,7 @@ fun ScreenProfile(navController: NavController, modifier: Modifier) {
                 }
             )
 
-            MenuItem(
+            ProfileMenuItem(
                 modifier = Modifier.padding(top = 14.dp),
                 icon = painterResource(id = R.drawable.restore),
                 text = stringResource(id = R.string.screen_profile_menu_item_restore_purchase_text),
@@ -161,7 +163,7 @@ fun ScreenProfile(navController: NavController, modifier: Modifier) {
                 }
             )
 
-            MenuItem(
+            ProfileMenuItem(
                 modifier = Modifier.padding(top = 14.dp),
                 icon = painterResource(id = R.drawable.help),
                 text = stringResource(id = R.string.screen_profile_menu_item_help_text),
@@ -170,7 +172,7 @@ fun ScreenProfile(navController: NavController, modifier: Modifier) {
                 }
             )
 
-            MenuItem(
+            ProfileMenuItem(
                 modifier = Modifier
                     .padding(top = 14.dp)
                     .clickable {
@@ -187,59 +189,5 @@ fun ScreenProfile(navController: NavController, modifier: Modifier) {
                 }
             )
         }
-    }
-}
-
-@Preview
-@Composable
-fun ProfilePreview() {
-    ScreenProfile(navController = rememberNavController(), modifier = Modifier)
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TopAppBar(modifier: Modifier, title: String, navigationAction: @Composable () -> Unit) {
-    CenterAlignedTopAppBar(
-        title = {
-            Text(
-                text = title,
-                Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                style = AppTheme.typography.profileTitleText
-            )
-        },
-        modifier = modifier,
-        navigationIcon = navigationAction
-    )
-}
-
-@Composable
-fun MenuItem(modifier: Modifier, icon: Painter, text: String, button: @Composable () -> Unit) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(40.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Box(
-            modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)
-                .background(AppTheme.color.secondaryBackground),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                painter = icon,
-                contentDescription = null
-            )
-        }
-        Text(
-            text = text,
-            modifier = Modifier.padding(start = 6.dp),
-            textAlign = TextAlign.Center,
-            style = AppTheme.typography.profileMenuItemText
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        button()
     }
 }

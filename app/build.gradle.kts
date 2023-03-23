@@ -90,17 +90,9 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
 
     //Google Fonts
-    implementation("androidx.compose.ui:ui-text-google-fonts:1.3.3")
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.4.0")
 
     //val Google Icon
     implementation("androidx.compose.material:material-icons-core:1.3.1")
     implementation("androidx.compose.material:material-icons-extended:1.3.1")
-
-    //Tests
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
 }

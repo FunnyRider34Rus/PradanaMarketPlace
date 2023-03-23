@@ -1,11 +1,11 @@
-package com.elpablo.shop
+package com.elpablo.shop.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.rememberNavController
-import com.elpablo.shop.ui.navigation.Screen
-import com.elpablo.shop.ui.navigation.ShopNavHost
+import com.elpablo.shop.navigation.Screen
+import com.elpablo.shop.navigation.ShopNavHost
 import com.elpablo.shop.ui.theme.ShopTheme
 import dagger.hilt.android.AndroidEntryPoint
 
