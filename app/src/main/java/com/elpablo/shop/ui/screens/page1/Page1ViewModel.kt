@@ -2,12 +2,12 @@ package com.elpablo.shop.ui.screens.page1
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.elpablo.shop.core.utils.Response
-import com.elpablo.shop.data.categories
-import com.elpablo.shop.data.remote.dto.FlashSale
-import com.elpablo.shop.data.remote.dto.Latest
-import com.elpablo.shop.domain.use_case.GetLatestContentUseCase
-import com.elpablo.shop.domain.use_case.GetSaleContentUseCase
+import com.elpablo.core.utils.Response
+import com.elpablo.core.utils.categories
+import com.elpablo.domain.model.FlashSaleContent
+import com.elpablo.domain.model.LatestContent
+import com.elpablo.domain.use_case.GetLatestContentUseCase
+import com.elpablo.domain.use_case.GetSaleContentUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,8 +41,8 @@ class Page1ViewModel @Inject constructor(
     }
 
     private fun getContent() {
-        var latest: List<Latest>? = null
-        var sale: List<FlashSale>? = null
+        var latest: List<LatestContent>? = null
+        var sale: List<FlashSaleContent>? = null
         viewModelScope.launch {
             async {
                 getLatest.invoke().collect { result ->

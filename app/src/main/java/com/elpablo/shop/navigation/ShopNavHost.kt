@@ -1,6 +1,7 @@
 package com.elpablo.shop.navigation
 
 import android.util.Log
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -8,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.elpablo.shop.R
 import com.elpablo.shop.core.components.BottomBar
 import com.elpablo.shop.ui.screens.login.ScreenLogin
 import com.elpablo.shop.ui.screens.page1.ScreenPage1
@@ -60,4 +62,34 @@ sealed class Screen(val route: String) {
     object Favourite : Screen(route = "favourite")
     object Basket : Screen(route = "basket")
     object Notification : Screen(route = "notification")
+}
+
+sealed class BottomBarItems(
+    val route: String,
+    @DrawableRes val icon: Int
+) {
+    object Home : BottomBarItems(
+        route = Screen.Page1.route,
+        icon = R.drawable.ic_home
+    )
+
+    object Favourite : BottomBarItems(
+        route = Screen.Favourite.route,
+        icon = R.drawable.ic_favourite
+    )
+
+    object Basket : BottomBarItems(
+        route = Screen.Basket.route,
+        icon = R.drawable.ic_basket
+    )
+
+    object Notification : BottomBarItems(
+        route = Screen.Notification.route,
+        icon = R.drawable.ic_notification
+    )
+
+    object Profile : BottomBarItems(
+        route = Screen.Profile.route,
+        icon = R.drawable.ic_profile
+    )
 }

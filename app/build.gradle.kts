@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
     id("dagger.hilt.android.plugin")
     id("com.google.devtools.ksp")
 }
@@ -48,6 +49,10 @@ android {
 }
 
 dependencies {
+    //Modules
+    implementation(project(":data"))
+    implementation(project(":domain"))
+    implementation(project(":core"))
 
     //Core
     implementation("androidx.core:core-ktx:1.9.0")
@@ -93,6 +98,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-text-google-fonts:1.4.0")
 
     //val Google Icon
-    implementation("androidx.compose.material:material-icons-core:1.3.1")
-    implementation("androidx.compose.material:material-icons-extended:1.3.1")
+    implementation("androidx.compose.material:material-icons-core:1.4.0")
+    implementation("androidx.compose.material:material-icons-extended:1.4.0")
 }

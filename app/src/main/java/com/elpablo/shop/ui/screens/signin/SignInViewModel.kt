@@ -2,9 +2,9 @@ package com.elpablo.shop.ui.screens.signin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.elpablo.shop.domain.model.User
-import com.elpablo.shop.domain.use_case.CheckIfUserAlreadyExistUseCase
-import com.elpablo.shop.domain.use_case.SaveUserToDatabaseUseCase
+import com.elpablo.domain.model.User
+import com.elpablo.domain.use_case.CheckIfUserAlreadyExistUseCase
+import com.elpablo.domain.use_case.SaveUserToDatabaseUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

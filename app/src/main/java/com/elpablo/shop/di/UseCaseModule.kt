@@ -1,8 +1,8 @@
 package com.elpablo.shop.di
 
-import com.elpablo.shop.domain.repository.AuthRepository
-import com.elpablo.shop.domain.repository.UserRepository
-import com.elpablo.shop.domain.use_case.*
+import com.elpablo.domain.repository.AuthRepository
+import com.elpablo.domain.repository.UserRepository
+import com.elpablo.domain.use_case.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,14 +1,6 @@
 package com.elpablo.shop.ui.screens.page1
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
@@ -25,11 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.elpablo.shop.R
-import com.elpablo.shop.ui.screens.page1.components.Page1AppBar
-import com.elpablo.shop.ui.screens.page1.components.Page1LatestCard
-import com.elpablo.shop.ui.screens.page1.components.Page1RowCategories
-import com.elpablo.shop.ui.screens.page1.components.Page1SaleCard
-import com.elpablo.shop.ui.screens.page1.components.Page1SearchInput
+import com.elpablo.shop.ui.screens.page1.components.*
 import com.elpablo.shop.ui.theme.AppTheme
 
 @Composable

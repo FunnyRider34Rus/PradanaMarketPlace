@@ -2,9 +2,9 @@ package com.elpablo.shop.di
 
 import android.app.Application
 import androidx.room.Room
-import com.elpablo.shop.core.utils.Const
-import com.elpablo.shop.data.local.data_source.UserDatabase
-import com.elpablo.shop.data.remote.ShopApi
+import com.elpablo.core.utils.Const
+import com.elpablo.data.local.data_source.UserDatabase
+import com.elpablo.data.remote.ShopApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
